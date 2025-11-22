@@ -1,0 +1,70 @@
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  padding: 1rem;
+  background: #111;
+  color: #f5f5f5;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+#calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+}
+
+.day-cell {
+  border: 1px solid #333;
+  padding: 0.5rem;
+  min-height: 60px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.day-cell .date-number {
+  font-weight: 600;
+}
+
+.day-cell .pl-summary {
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+/* Modal */
+#day-modal.hidden {
+  display: none;
+}
+
+#day-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #181818;
+  padding: 1rem;
+  border-radius: 8px;
+  width: 300px;
+}
+
+.modal-content label {
+  display: block;
+  margin-top: 0.5rem;
+}
+
+.modal-actions {
+  margin-top: 0.75rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
