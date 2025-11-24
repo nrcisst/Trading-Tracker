@@ -175,6 +175,15 @@ function setupMonthControls() {
 }
 
 
+// ---- Mouse tracking for flashlight effect ----
+
+function setupMouseTracking() {
+  document.addEventListener("mousemove", (e) => {
+    document.documentElement.style.setProperty("--x", e.clientX);
+    document.documentElement.style.setProperty("--y", e.clientY);
+  });
+}
+
 function init() {
   const now = new Date();
   currentYear = now.getFullYear();
@@ -182,6 +191,7 @@ function init() {
 
   setupModalButtons();
   setupMonthControls();
+  setupMouseTracking();
   renderCalendar();
 }
 

@@ -20,20 +20,59 @@ header {
 }
 
 .day-cell {
+  background: hsl(0 0% 10%);
   border: 1px solid #333;
   padding: 0.5rem;
   min-height: 60px;
   cursor: pointer;
   font-size: 0.9rem;
+  position: relative;
+  transition: background 0.1s;
+}
+
+.day-cell:hover {
+  --active: 1;
+}
+
+.day-cell:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at calc(var(--x) * 1px) calc(var(--y) * 1px), hsl(0 0% 100% / 0.08), transparent 15vmin);
+  background-attachment: fixed;
+  opacity: var(--active, 0);
+  transition: opacity 0.2s;
+  pointer-events: none;
+}
+
+.day-cell:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at calc(var(--x) * 1px) calc(var(--y) * 1px), hsl(0 0% 100% / 0.25), transparent 15vmin),
+    transparent;
+  background-attachment: fixed;
+  pointer-events: none;
+  mask:
+    linear-gradient(white, white) 50% 0 / 100% 4px no-repeat,
+    linear-gradient(white, white) 50% 100% / 100% 4px no-repeat,
+    linear-gradient(white, white) 0 50% / 4px 100% no-repeat,
+    linear-gradient(white, white) 100% 50% / 4px 100% no-repeat;
 }
 
 .day-cell .date-number {
   font-weight: 600;
+  position: relative;
+  z-index: 1;
 }
 
 .day-cell .pl-summary {
   font-size: 0.8rem;
   margin-top: 0.25rem;
+  position: relative;
+  z-index: 1;
 }
 
 /* Modal */
