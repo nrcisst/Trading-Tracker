@@ -26,12 +26,18 @@ A simple web-based trading journal application to track daily profit/loss (P/L) 
 
 ```
 TradingTracker/
-├── index.html          # Main HTML page
-├── app.js              # Frontend JavaScript logic
-├── styles.css          # Styling
-└── backend/
-    ├── server.js       # Express server
-    └── package.json    # Backend dependencies
+├── frontend/
+│   ├── index.html          # Main HTML page
+│   ├── css/
+│   │   └── styles.css      # Styling
+│   └── js/
+│       └── app.js          # Frontend JavaScript logic
+├── backend/
+│   ├── server.js           # Express server
+│   ├── db.js               # Database initialization
+│   └── trades.db           # SQLite database
+├── package.json            # All dependencies
+└── README.md
 ```
 
 ## Getting Started
@@ -49,9 +55,8 @@ git clone <repository-url>
 cd TradingTracker
 ```
 
-2. Install backend dependencies:
+2. Install dependencies:
 ```bash
-cd backend
 npm install
 ```
 
@@ -59,14 +64,11 @@ npm install
 
 1. Start the backend server:
 ```bash
-cd backend
-npm start
+npm run dev
 ```
 The server will run on `http://localhost:4000`
 
-2. Open the frontend:
-   - Open `index.html` in your web browser
-   - Or use a local development server like Live Server
+2. Open your browser and navigate to `http://localhost:4000`
 
 ## Usage
 

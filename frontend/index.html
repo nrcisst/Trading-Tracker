@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Trade Tracker</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+  <header>
+    <h1>trackr.</h1>
+    <div id="month-controls">
+      <button id="prev-month">&larr; Prev</button>
+      <span id="current-month-label">November 2023</span>
+      <button id="next-month">Next &rarr;</button>
+    </div>
+  </header>
+
+  <section id="stats">
+    <div class="stat-card">
+      <div class="stat-label">Net P/L</div>
+      <div class="stat-value" id="stat-net-pl">$0.00</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Win Rate</div>
+      <div class="stat-value" id="stat-win-rate">0%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Profit Factor</div>
+      <div class="stat-value" id="stat-profit-factor">0.00</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Max Win</div>
+      <div class="stat-value positive" id="stat-max-win">$0.00</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Max Loss</div>
+      <div class="stat-value negative" id="stat-max-loss">$0.00</div>
+    </div>
+  </section>
+
+  <!-- Monthly Stats -->
+  <section id="monthly-stats">
+    <h2 class="section-title">Monthly Performance</h2>
+    <div class="monthly-stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Monthly P/L</div>
+        <div class="stat-value" id="monthly-pl">$0.00</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Trading Days</div>
+        <div class="stat-value" id="monthly-trading-days">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Avg Green Day</div>
+        <div class="stat-value positive" id="monthly-avg-green">$0.00</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Avg Red Day</div>
+        <div class="stat-value negative" id="monthly-avg-red">$0.00</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Equity Curve -->
+  <section id="equity-curve-section">
+    <h2 class="section-title">Equity Curve</h2>
+    <div class="chart-container">
+      <canvas id="equity-curve"></canvas>
+    </div>
+  </section>
+
+  <!-- View Toggle & Filters -->
+  <section id="view-controls">
+    <div class="view-toggle">
+      <button id="calendar-view-btn" class="view-btn active">Calendar</button>
+      <button id="journal-view-btn" class="view-btn">Journal</button>
+    </div>
+
+    <div class="filter-controls hidden">
+      <input type="text" id="filter-ticker" class="filter-input" placeholder="Filter by ticker...">
+      
+      <select id="filter-day-type" class="filter-select">
+        <option value="all">All Days</option>
+        <option value="green">Green Days Only</option>
+        <option value="red">Red Days Only</option>
+      </select>
+
+      <select id="sort-by" class="filter-select">
+        <option value="date">Sort by Date</option>
+        <option value="pl-high">Highest P/L</option>
+        <option value="pl-low">Lowest P/L</option>
+        <option value="trades">Most Trades</option>
+      </select>
+      
+      <button id="review-mode-btn" class="view-btn">Review Mode</button>
+    </div>
+  </section>
+
+  <main>
+    <!-- Calendar View -->
+    <div id="calendar-container">
+      <div id="calendar"></div>
+    </div>
+
+    <!-- Journal View -->
+    <div id="journal-container" class="hidden">
+      <div id="journal-list"></div>
+    </div>
+  </main>
+
+  <!-- Day detail panel -->
+  <div id="day-modal" class="hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modal-date-label">Date</h2>
+        <div id="review-nav" class="review-navigation hidden">
+          <button id="prev-day-btn" class="nav-btn">&larr; Prev</button>
+          <span id="review-position">Day 1 of 10</span>
+          <button id="next-day-btn" class="nav-btn">Next &rarr;</button>
+        </div>
+      </div>
+
+      <!-- Daily Summary Section -->
+      <div id="daily-summary" class="daily-summary-grid">
+        <div class="summary-card">
+          <span class="summary-label">Net P/L</span>
+          <span id="summary-net-pl" class="summary-value">$0.00</span>
+        </div>
+        <div class="summary-card">
+          <span class="summary-label">Trades</span>
+          <span id="summary-trades" class="summary-value">0</span>
+        </div>
+        <div class="summary-card">
+          <span class="summary-label">Best Trade</span>
+          <span id="summary-best" class="summary-value positive">$0.00</span>
+        </div>
+        <div class="summary-card">
+          <span class="summary-label">Worst Trade</span>
+          <span id="summary-worst" class="summary-value negative">$0.00</span>
+        </div>
+        <div class="summary-card">
+          <span class="summary-label">Profit Factor</span>
+          <span id="summary-pf" class="summary-value">0.00</span>
+        </div>
+      </div>
+
+      <label style="margin-top: 1rem; display: block;">Notes</label>
+      <textarea id="notes-input" rows="3" placeholder="Day notes..."></textarea>
+
+      <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 1.5rem 0;">
+
+      <!-- Trade Entries -->
+      <h3>Trades</h3>
+      <div id="trade-entries-list">
+        <!-- Entries will be injected here -->
+      </div>
+
+      <div class="add-trade-form">
+        <h4>Add Trade</h4>
+
+        <!-- Row 1: Core Data -->
+        <div class="form-row">
+          <input type="text" id="entry-ticker" placeholder="Ticker (e.g. AAPL)" autofocus />
+          <select id="entry-direction">
+            <option value="LONG">Long</option>
+            <option value="SHORT">Short</option>
+          </select>
+          <input type="number" id="entry-pl" placeholder="P/L" />
+        </div>
+
+        <!-- Row 2: Optional Data -->
+        <div class="form-row optional-fields">
+          <select id="entry-tag">
+            <option value="">Select Tag...</option>
+            <option value="Breakout">Breakout</option>
+            <option value="Pullback">Pullback</option>
+            <option value="Reversal">Reversal</option>
+            <option value="Scalp">Scalp</option>
+            <option value="Swing">Swing</option>
+          </select>
+
+          <select id="entry-confidence">
+            <option value="">Conf...</option>
+            <option value="1">1/5</option>
+            <option value="2">2/5</option>
+            <option value="3">3/5</option>
+            <option value="4">4/5</option>
+            <option value="5">5/5</option>
+          </select>
+
+          <select id="entry-quality">
+            <option value="">Grade...</option>
+            <option value="A">A Setup</option>
+            <option value="B">B Setup</option>
+            <option value="C">C Setup</option>
+          </select>
+
+          <button id="add-trade-btn">Add</button>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button id="close-modal">Close</button>
+        <button id="save-day">Save Summary</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div id="confirm-modal" class="hidden">
+    <div class="confirm-overlay"></div>
+    <div class="confirm-dialog">
+      <h3 id="confirm-title">Confirm Action</h3>
+      <p id="confirm-message">Are you sure?</p>
+      <div class="confirm-actions">
+        <button id="confirm-cancel" class="btn-secondary">Cancel</button>
+        <button id="confirm-ok" class="btn-danger">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SVG Filter for Glow Effect -->
+  <svg class="sr-only" style="position: absolute; width: 0; height: 0; overflow: hidden;"
+    xmlns="http://www.w3.org/2000/svg">
+    <filter id="blur" width="500%" height="500%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="20" />
+    </filter>
+  </svg>
+
+  <script src="js/app.js"></script>
+</body>
+
+</html>
