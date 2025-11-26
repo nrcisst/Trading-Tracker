@@ -1,5 +1,257 @@
+// ---- Auth Management ----
+
+function getToken() {
+  return localStorage.getItem('token');
+}
+
+function setToken(token) {
+  localStorage.setItem('token', token);
+}
+
+function clearToken() {
+  localStorage.removeItem('token');
+}
+
+async function authedFetch(url, options = {}) {
+  const token = getToken();
+  if (!token) {
+    showAuth();
+    throw new Error('No token');
+  }
+  
+  options.headers = {
+    ...options.headers,
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json'
+  };
+  
+  const response = await fetch(url, options);
+  
+  if (response.status === 401) {
+    clearToken();
+    showAuth();
+    throw new Error('Unauthorized');
+  }
+  
+  return response;
+}
+
+async function handleLogin() {
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
+  
+  if (!email || !password) {
+    alert('Please enter email and password');
+    return;
+  }
+  
+  try {
+    const response = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    
+    const data = await response.json();
+    
+    if (response.ok) {
+      setToken(data.token);
+      showApp();
+      init();
+    } else {
+      alert(data.error || 'Login failed');
+    }
+  } catch (err) {
+    alert('Login error: ' + err.message);
+  }
+}
+
+async function handleRegister() {
+  const email = document.getElementById('registerEmail').value;
+  const password = document.getElementById('registerPassword').value;
+  
+  if (!email || !password) {
+    alert('Please enter email and password');
+    return;
+  }
+  
+  try {
+    const response = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    
+    const data = await response.json();
+    
+    if (response.ok) {
+      setToken(data.token);
+      showApp();
+      init();
+    } else {
+      alert(data.error || 'Registration failed');
+    }
+  } catch (err) {
+    alert('Registration error: ' + err.message);
+  }
+}
+
+function handleLogout() {
+  clearToken();
+  showAuth();
+  // Reset state
+  tradesByDate = {};
+  currentView = 'calendar';
+}
+
+function showAuth() {
+  document.getElementById('authContainer').style.display = 'flex';
+  document.getElementById('appContainer').style.display = 'none';
+}
+
+function showApp() {
+  document.getElementById('authContainer').style.display = 'none';
+  document.getElementById('appContainer').style.display = 'block';
+}
+
+function showLogin() {
+  document.getElementById('loginForm').style.display = 'block';
+  document.getElementById('registerForm').style.display = 'none';
+}
+
+function showRegister() {
+  document.getElementById('loginForm').style.display = 'none';
+  document.getElementById('registerForm').style.display = 'block';
+}
+
+// ---- User Profile Functions ----
+
+async function loadUserInfo() {
+  try {
+    const res = await authedFetch(`${apiBase}/user/me`);
+    if (!res.ok) throw new Error('Failed to load user');
+    
+    currentUser = await res.json();
+    renderUserHeader();
+  } catch (err) {
+    console.error('Error loading user:', err);
+  }
+}
+
+function renderUserHeader() {
+  if (!currentUser) return;
+  
+  const email = currentUser.email;
+  const initials = getInitials(email);
+  const profileImage = currentUser.profileImage;
+  
+  // Header avatar
+  document.getElementById('headerEmail').textContent = email;
+  if (profileImage) {
+    document.getElementById('headerAvatarImg').src = profileImage;
+    document.getElementById('headerAvatarImg').style.display = 'block';
+    document.getElementById('headerAvatarInitials').style.display = 'none';
+  } else {
+    document.getElementById('headerAvatarInitials').textContent = initials;
+    document.getElementById('headerAvatarInitials').style.display = 'block';
+    document.getElementById('headerAvatarImg').style.display = 'none';
+  }
+  
+  // Dropdown avatar
+  document.getElementById('dropdownEmail').textContent = email;
+  document.getElementById('dropdownMemberSince').textContent = 
+    `Member since ${formatDate(currentUser.memberSince)}`;
+  
+  if (profileImage) {
+    document.getElementById('dropdownAvatarImg').src = profileImage;
+    document.getElementById('dropdownAvatarImg').style.display = 'block';
+    document.getElementById('dropdownAvatarInitials').style.display = 'none';
+  } else {
+    document.getElementById('dropdownAvatarInitials').textContent = initials;
+    document.getElementById('dropdownAvatarInitials').style.display = 'block';
+    document.getElementById('dropdownAvatarImg').style.display = 'none';
+  }
+  
+  document.getElementById('userHeader').style.display = 'flex';
+}
+
+function getInitials(email) {
+  if (!email) return '?';
+  const parts = email.split('@')[0].split(/[._-]/);
+  if (parts.length >= 2) {
+    return (parts[0][0] + parts[1][0]).toUpperCase();
+  }
+  return email.substring(0, 2).toUpperCase();
+}
+
+function formatDate(dateStr) {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+}
+
+function toggleProfileDropdown() {
+  const dropdown = document.getElementById('profileDropdown');
+  dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+}
+
+async function handleProfileImageUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  
+  if (file.size > 5 * 1024 * 1024) {
+    showError('File too large. Maximum size is 5MB.');
+    return;
+  }
+  
+  if (!file.type.startsWith('image/')) {
+    showError('Please select an image file.');
+    return;
+  }
+  
+  const formData = new FormData();
+  formData.append('profileImage', file);
+  
+  try {
+    const token = getToken();
+    const res = await fetch(`${apiBase}/user/profile-image`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+      body: formData
+    });
+    
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error.error || 'Upload failed');
+    }
+    
+    const data = await res.json();
+    currentUser.profileImage = data.profileImage;
+    renderUserHeader();
+    
+    showSuccess('Profile picture updated!');
+  } catch (err) {
+    showError(err.message);
+  }
+  
+  event.target.value = '';
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', (e) => {
+  const dropdown = document.getElementById('profileDropdown');
+  const userInfo = document.querySelector('.user-info');
+  if (dropdown && userInfo && !dropdown.contains(e.target) && !userInfo.contains(e.target)) {
+    dropdown.style.display = 'none';
+  }
+});
+
+// ---- App Code ----
+
 const apiBase = "/api";
 
+let currentUser = null;
 let currentYear;
 let currentMonth;
 
@@ -105,7 +357,7 @@ function formatDateKey(year, month, day) {
 
 async function fetchDay(dateKey) {
   try {
-    const res = await fetch(`${apiBase}/trades/${dateKey}`);
+    const res = await authedFetch(`${apiBase}/trades/${dateKey}`);
     if (!res.ok) {
       const errorData = await res.json().catch(() => ({}));
       throw new Error(errorData.error || "Failed to fetch day");
@@ -121,7 +373,7 @@ async function fetchDay(dateKey) {
 
 async function saveDay(dateKey, payload) {
   try {
-    const res = await fetch(`${apiBase}/trades/${dateKey}`, {
+    const res = await authedFetch(`${apiBase}/trades/${dateKey}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -140,7 +392,7 @@ async function fetchMonthData(year, month) {
   const m = month + 1;
   try {
     // Fetch trades
-    const tradesRes = await fetch(`${apiBase}/trades?year=${year}&month=${m}`);
+    const tradesRes = await authedFetch(`${apiBase}/trades?year=${year}&month=${m}`);
     if (!tradesRes.ok) {
       const errorData = await tradesRes.json().catch(() => ({}));
       throw new Error(errorData.error || "Failed to fetch month data");
@@ -148,7 +400,7 @@ async function fetchMonthData(year, month) {
     const tradesJson = await tradesRes.json();
 
     // Fetch all entries for the month in one call
-    const entriesRes = await fetch(`${apiBase}/entries/month?year=${year}&month=${m}`);
+    const entriesRes = await authedFetch(`${apiBase}/entries/month?year=${year}&month=${m}`);
     if (!entriesRes.ok) {
       const errorData = await entriesRes.json().catch(() => ({}));
       throw new Error(errorData.error || "Failed to fetch entries");
@@ -647,7 +899,7 @@ function renderCalendar() {
         // Fetch trade count
         let tradeCount = 0;
         try {
-          const res = await fetch(`${apiBase}/entries/${key}`);
+          const res = await authedFetch(`${apiBase}/entries/${key}`);
           if (res.ok) {
             const json = await res.json();
             tradeCount = json.data ? json.data.length : 0;
@@ -784,7 +1036,7 @@ async function openDayModal(dateKey) {
 
 async function fetchAndRenderEntries(dateKey) {
   try {
-    const res = await fetch(`${apiBase}/entries/${dateKey}`);
+    const res = await authedFetch(`${apiBase}/entries/${dateKey}`);
     if (!res.ok) {
       const errorData = await res.json().catch(() => ({}));
       throw new Error(errorData.error || "Failed to fetch entries");
@@ -901,7 +1153,7 @@ function renderEntries(entries) {
 
 async function deleteTradeEntry(id) {
   try {
-    const res = await fetch(`${apiBase}/entries/${id}`, { method: "DELETE" });
+    const res = await authedFetch(`${apiBase}/entries/${id}`, { method: "DELETE" });
     if (!res.ok) {
       const errorData = await res.json().catch(() => ({}));
       throw new Error(errorData.error || "Failed to delete");
@@ -935,7 +1187,7 @@ function editTradeEntry(entry) {
 
 async function updateTradeEntry(id, payload) {
   try {
-    const res = await fetch(`${apiBase}/entries/${id}`, {
+    const res = await authedFetch(`${apiBase}/entries/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
@@ -1047,7 +1299,7 @@ function setupModalButtons() {
         addBtn.textContent = "Add";
       } else {
         // Add new trade
-        const res = await fetch(`${apiBase}/entries`, {
+        const res = await authedFetch(`${apiBase}/entries`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload)
@@ -1142,6 +1394,9 @@ async function init() {
   setupMonthControls();
   setupViewControls();
 
+  // Load user profile info
+  await loadUserInfo();
+
   try {
     await fetchMonthData(currentYear, currentMonth);
   } catch (err) {
@@ -1151,4 +1406,31 @@ async function init() {
   renderCalendar();
 }
 
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener("DOMContentLoaded", () => {
+  // Check if token in URL (from OAuth redirect)
+  const urlParams = new URLSearchParams(window.location.search);
+  const tokenFromUrl = urlParams.get('token');
+  const errorFromUrl = urlParams.get('error');
+  
+  if (tokenFromUrl) {
+    setToken(tokenFromUrl);
+    // Clean URL
+    window.history.replaceState({}, document.title, '/');
+    showApp();
+    init();
+    return;
+  }
+  
+  if (errorFromUrl) {
+    alert('OAuth login failed. Please try again.');
+    window.history.replaceState({}, document.title, '/');
+  }
+  
+  // Normal flow
+  if (getToken()) {
+    showApp();
+    init();
+  } else {
+    showAuth();
+  }
+});

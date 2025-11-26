@@ -9,12 +9,88 @@
 </head>
 
 <body>
+  <!-- Auth Container -->
+  <div id="authContainer">
+    <div class="auth-box">
+      <h1>trackr.</h1>
+      <div id="loginForm">
+        <h2>Login</h2>
+        <input type="email" id="loginEmail" placeholder="Email" />
+        <input type="password" id="loginPassword" placeholder="Password" />
+        <button onclick="handleLogin()">Login</button>
+        
+        <div class="oauth-divider">
+          <span>or</span>
+        </div>
+        
+        <a href="/auth/google" class="oauth-btn">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" fill="#4285F4"/>
+            <path d="M9.003 18c2.43 0 4.467-.806 5.956-2.18L12.05 13.56c-.806.54-1.836.86-3.047.86-2.344 0-4.328-1.584-5.036-3.711H.96v2.332C2.44 15.983 5.485 18 9.003 18z" fill="#34A853"/>
+            <path d="M3.964 10.712c-.18-.54-.282-1.117-.282-1.71 0-.593.102-1.17.282-1.71V4.96H.957C.347 6.175 0 7.55 0 9.002c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/>
+            <path d="M9.003 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.464.891 11.426 0 9.003 0 5.485 0 2.44 2.017.96 4.958L3.967 7.29c.708-2.127 2.692-3.71 5.036-3.71z" fill="#EA4335"/>
+          </svg>
+          Sign in with Google
+        </a>
+        
+        <p>Don't have an account? <a href="#" onclick="showRegister(); return false;">Register</a></p>
+      </div>
+      
+      <div id="registerForm" style="display:none">
+        <h2>Register</h2>
+        <input type="email" id="registerEmail" placeholder="Email" />
+        <input type="password" id="registerPassword" placeholder="Password (min 8 chars)" />
+        <button onclick="handleRegister()">Register</button>
+        <p>Already have an account? <a href="#" onclick="showLogin(); return false;">Login</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- App Container -->
+  <div id="appContainer" style="display:none">
   <header>
     <h1>trackr.</h1>
     <div id="month-controls">
       <button id="prev-month">&larr; Prev</button>
       <span id="current-month-label">November 2023</span>
       <button id="next-month">Next &rarr;</button>
+    </div>
+    
+    <div id="userHeader" style="display:none;">
+      <div class="user-info" onclick="toggleProfileDropdown()">
+        <div class="user-avatar" id="headerAvatar">
+          <img id="headerAvatarImg" src="" alt="" style="display:none;">
+          <span id="headerAvatarInitials"></span>
+        </div>
+        <span id="headerEmail"></span>
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+          <path d="M6 8L2 4h8z"/>
+        </svg>
+      </div>
+      
+      <div id="profileDropdown" class="profile-dropdown" style="display:none;">
+        <div class="profile-header">
+          <div class="profile-avatar-large" id="dropdownAvatar">
+            <img id="dropdownAvatarImg" src="" alt="" style="display:none;">
+            <span id="dropdownAvatarInitials"></span>
+          </div>
+          <div class="profile-info">
+            <div id="dropdownEmail" class="profile-email"></div>
+            <div id="dropdownMemberSince" class="profile-since"></div>
+          </div>
+        </div>
+        
+        <div class="profile-actions">
+          <label for="profileImageInput" class="profile-btn">
+            Change Profile Picture
+          </label>
+          <input type="file" id="profileImageInput" accept="image/*" style="display:none;" onchange="handleProfileImageUpload(event)">
+        </div>
+        
+        <div class="profile-divider"></div>
+        
+        <button onclick="handleLogout()" class="profile-logout-btn">Logout</button>
+      </div>
     </div>
   </header>
 
@@ -229,6 +305,8 @@
       <feGaussianBlur in="SourceGraphic" stdDeviation="20" />
     </filter>
   </svg>
+
+  </div> <!-- End appContainer -->
 
   <script src="js/app.js"></script>
 </body>
