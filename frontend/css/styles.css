@@ -213,7 +213,7 @@ button:active {
   max-height: 300px;
 }
 
-/* View Controls */
+
 #view-controls {
   display: flex;
   justify-content: space-between;
@@ -1040,6 +1040,7 @@ button:active {
     opacity: 0;
     transform: scale(0.95) translateY(-20px);
   }
+
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
@@ -1180,6 +1181,7 @@ button:active {
     transform: translateY(10px);
   }
 }
+
 /* Auth Styles */
 #authContainer {
   display: flex;
@@ -1621,6 +1623,7 @@ button:active {
     transform: translateX(400px);
     opacity: 0;
   }
+
   to {
     transform: translateX(0);
     opacity: 1;
@@ -1636,4 +1639,3 @@ button:active {
   background: #ef4444;
   color: white;
 }
-
