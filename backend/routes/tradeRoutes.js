@@ -100,8 +100,7 @@ router.post("/trades/:date", (req, res) => {
 
     const query = `INSERT INTO trades (user_id, trade_date, notes) 
                     VALUES (?, ?, ?)
-                    ON CONFLICT (user_id, trade_date) 
-                    DO UPDATE SET notes = excluded.notes;`;
+                    ON DUPLICATE KEY UPDATE notes = VALUES(notes)`;
 
     dbClient.run(query, [userId, dateKey, notes || ''], function (err) {
         if (err) {
@@ -238,7 +237,7 @@ router.post("/entries", (req, res) => {
         const entryId = this.lastID;
 
         // Ensure a trades record exists for this date
-        const ensureTradeQuery = `INSERT INTO trades (user_id, trade_date, notes) VALUES (?, ?, '') ON CONFLICT (user_id, trade_date) DO NOTHING`;
+        const ensureTradeQuery = `INSERT IGNORE INTO trades (user_id, trade_date, notes) VALUES (?, ?, '')`;
         dbClient.run(ensureTradeQuery, [userId, trade_date], (err) => {
             if (err) {
                 console.error("[POST /api/entries] DB error creating trade record:", err.message);
