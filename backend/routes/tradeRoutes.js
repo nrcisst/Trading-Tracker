@@ -216,7 +216,20 @@ router.post("/entries", (req, res) => {
     const insertQuery = `INSERT INTO trade_entries (user_id, trade_date, ticker, direction, entry_price, exit_price, size, pnl, notes, tag, confidence, setup_quality) 
                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
-    dbClient.run(insertQuery, [userId, trade_date, ticker, direction || 'LONG', entry_price || 0, exit_price || 0, size || 0, pnl, notes, tag, confidence, setup_quality], function (err) {
+    dbClient.run(insertQuery, [
+        userId, 
+        trade_date, 
+        ticker, 
+        direction || 'LONG', 
+        entry_price || 0, 
+        exit_price || 0, 
+        size || 0, 
+        pnl, 
+        notes || '', 
+        tag || null, 
+        confidence || null, 
+        setup_quality || null
+    ], function (err) {
         if (err) {
             console.error("[POST /api/entries] DB error:", err.message);
             return res.status(500).json({ error: "Database error saving entry" });
@@ -286,7 +299,16 @@ router.put("/entries/:id", (req, res) => {
                          SET ticker = ?, direction = ?, pnl = ?, tag = ?, confidence = ?, setup_quality = ?
                          WHERE id = ? AND user_id = ?`;
 
-    dbClient.run(updateQuery, [ticker, direction, pnl, tag, confidence, setup_quality, id, userId], function (err) {
+    dbClient.run(updateQuery, [
+        ticker, 
+        direction || 'LONG', 
+        pnl, 
+        tag || null, 
+        confidence || null, 
+        setup_quality || null, 
+        id, 
+        userId
+    ], function (err) {
         if (err) {
             console.error(`[PUT /api/entries/${id}] DB error:`, err.message);
             return res.status(500).json({ error: "Database error updating entry" });

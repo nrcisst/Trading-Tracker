@@ -910,6 +910,9 @@ function renderCalendar() {
 
       // Add hover tooltip
       cell.addEventListener('mouseenter', async () => {
+        // Remove any existing tooltips first
+        document.querySelectorAll('.calendar-tooltip').forEach(t => t.remove());
+        
         const tooltip = document.createElement('div');
         tooltip.className = 'calendar-tooltip';
 
