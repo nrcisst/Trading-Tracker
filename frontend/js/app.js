@@ -484,7 +484,12 @@ async function fetchMonthData(year, month) {
       tradesByDate[trade.trade_date] = trade;
     });
 
-    updateStats();
+    tradesJson.data.forEach(trade => {
+      tradesByDate[trade.trade_date] = trade;
+    });
+
+    calculateAndRenderMonthlyStats();
+
   } catch (err) {
     console.error("fetchMonthData error:", err);
     showError(err.message || "Failed to load month data");
@@ -526,7 +531,8 @@ async function fetchYearData(year) {
   }
 }
 
-function updateStats() {
+
+function calculateAndRenderMonthlyStats() {
   const trades = Object.values(tradesByDate);
   let netPl = 0;
   let wins = 0;
@@ -555,7 +561,55 @@ function updateStats() {
   const winRate = totalTrades > 0 ? Math.round((wins / totalTrades) * 100) : 0;
   const profitFactor = grossLoss > 0 ? (grossProfit / grossLoss).toFixed(2) : grossProfit > 0 ? "∞" : "0.00";
 
-  // Update DOM
+  renderStatsUI({
+    netPl,
+    winRate,
+    profitFactor,
+    maxWin,
+    maxLoss
+  });
+
+  // Also update header MTD
+  mtdPl = monthlyPlForHeader(tradesByDate);
+  renderHeaderStatus();
+  updateMonthlyStats();
+  renderEquityCurve();
+}
+
+async function fetchAndRenderYearStats(year) {
+  try {
+    const res = await authedFetch(`${apiBase}/trades/year/stats?year=${year}`);
+    if (!res.ok) throw new Error("Failed to fetch year stats");
+    const json = await res.json();
+    const stats = json.data;
+
+    const winRate = stats.total_trades > 0 ? Math.round((stats.wins / stats.total_trades) * 100) : 0;
+    const profitFactor = stats.gross_loss > 0
+      ? (stats.gross_profit / stats.gross_loss).toFixed(2)
+      : stats.gross_profit > 0 ? "∞" : "0.00";
+
+    renderStatsUI({
+      netPl: stats.net_pl,
+      winRate: winRate,
+      profitFactor: profitFactor,
+      maxWin: stats.max_win,
+      maxLoss: stats.max_loss
+    });
+
+  } catch (err) {
+    console.error("fetchAndRenderYearStats error:", err);
+    // Fallback to zero
+    renderStatsUI({
+      netPl: 0,
+      winRate: 0,
+      profitFactor: "0.00",
+      maxWin: 0,
+      maxLoss: 0
+    });
+  }
+}
+
+function renderStatsUI({ netPl, winRate, profitFactor, maxWin, maxLoss }) {
   const netPlEl = document.getElementById("stat-net-pl");
   netPlEl.textContent = formatPL(netPl);
   netPlEl.className = `stat-value ${netPl > 0 ? 'positive' : netPl < 0 ? 'negative' : ''}`;
@@ -565,15 +619,8 @@ function updateStats() {
 
   document.getElementById("stat-max-win").textContent = formatPL(maxWin);
   document.getElementById("stat-max-loss").textContent = formatPL(maxLoss);
-
-  // Update monthly stats and equity curve
-  updateMonthlyStats();
-  renderEquityCurve();
-
-  // Update header MTD based on monthly net P/L
-  mtdPl = monthlyPlForHeader(tradesByDate);
-  renderHeaderStatus();
 }
+
 
 function monthlyPlForHeader(tradesMap) {
   return Object.values(tradesMap).reduce((sum, t) => sum + (t.pl || 0), 0);
@@ -1089,6 +1136,8 @@ function setCalendarMode(mode) {
     document.getElementById('monthly-stats').classList.add('hidden');
     document.getElementById('current-month-label').textContent = `${currentYear}`;
     fetchYearData(currentYear);
+    fetchAndRenderYearStats(currentYear);
+
     renderEquityCurve();
     renderHeaderStatus();
   } else {
@@ -1096,7 +1145,9 @@ function setCalendarMode(mode) {
     document.getElementById('year-container').classList.add('hidden');
     document.getElementById('yearly-stats').classList.add('hidden');
     document.getElementById('monthly-stats').classList.remove('hidden');
+    calculateAndRenderMonthlyStats();
     renderCalendar();
+
     renderEquityCurve();
     renderHeaderStatus();
   }
@@ -1204,7 +1255,7 @@ function renderCalendar() {
       cell.addEventListener('mouseenter', () => {
         // Remove any existing tooltips first
         document.querySelectorAll('.calendar-tooltip').forEach(t => t.remove());
-        
+
         const tooltip = document.createElement('div');
         tooltip.className = 'calendar-tooltip';
 
@@ -1449,8 +1500,8 @@ function renderEntries(entries) {
         // Handled by fetchAndRenderEntries -> updateDailySummary
 
         // Refresh calendar and stats
-        await fetchMonthData(currentYear, currentMonth);
-        renderCalendar();
+        await refreshAppData();
+
       }
     });
 
@@ -1532,7 +1583,9 @@ function setupModalButtons() {
       saveBtn.disabled = true;
       saveBtn.textContent = "Saving...";
       await saveDay(dateKey, { notes });
+      await refreshAppData();
       closeDayModal();
+
       showSuccess("Notes saved");
     } catch (err) {
       console.error(err);
@@ -1542,6 +1595,30 @@ function setupModalButtons() {
       saveBtn.textContent = "Save Summary";
     }
   });
+
+  // Centralized refresh function
+  async function refreshAppData() {
+    // Always fetch year data to update YTD and Grid
+    await fetchYearData(currentYear);
+
+    // If in month view, refetch month data
+    if (calendarMode === 'month') {
+      await fetchMonthData(currentYear, currentMonth); // This calls calculateAndRenderMonthlyStats
+      renderCalendar();
+    } else {
+      // In year mode, refresh year stats
+      await fetchAndRenderYearStats(currentYear);
+      renderYearGrid();
+    }
+
+    // Update Header Status (YTD/MTD)
+    renderHeaderStatus();
+
+    // If journal view is active, it needs to re-render potentially
+    if (currentView === 'journal') {
+      renderJournalView();
+    }
+  }
 
   // Add Trade Entry
   const addBtn = document.getElementById("add-trade-btn");
@@ -1628,11 +1705,12 @@ function setupModalButtons() {
       tickerInput.focus();
 
       // Refresh list and calendar
+      // Refresh list and calendar
       await fetchAndRenderEntries(dateKey);
 
-      // Refresh calendar and stats
-      await fetchMonthData(currentYear, currentMonth);
-      renderCalendar();
+      // Refresh calendar and stats logic
+      await refreshAppData();
+
 
     } catch (err) {
       console.error(err);
@@ -1771,7 +1849,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ---- Username Management ----
 
-window.showUsernameEdit = function() {
+window.showUsernameEdit = function () {
   const popup = document.getElementById('usernamePopup');
   const input = document.getElementById('usernameInput');
   input.value = currentUser?.username || '';
@@ -1779,7 +1857,7 @@ window.showUsernameEdit = function() {
   input.focus();
 };
 
-window.closeUsernamePopup = function() {
+window.closeUsernamePopup = function () {
   document.getElementById('usernamePopup').style.display = 'none';
 };
 
@@ -1788,38 +1866,38 @@ function showNotification(message, type = 'success') {
   notification.textContent = message;
   notification.className = `notification ${type}`;
   notification.style.display = 'block';
-  
+
   setTimeout(() => {
     notification.style.display = 'none';
   }, 3000);
 }
 
-window.saveUsername = async function() {
+window.saveUsername = async function () {
   const username = document.getElementById('usernameInput').value.trim();
-  
+
   if (!username) {
     showNotification('Username cannot be empty', 'error');
     return;
   }
-  
+
   if (username.length < 3) {
     showNotification('Username must be at least 3 characters', 'error');
     return;
   }
-  
+
   if (!/^[a-zA-Z0-9_-]+$/.test(username)) {
     showNotification('Username can only contain letters, numbers, - and _', 'error');
     return;
   }
-  
+
   try {
     const res = await authedFetch(`${apiBase}/user/username`, {
       method: 'PUT',
       body: JSON.stringify({ username })
     });
-    
+
     const data = await res.json();
-    
+
     if (res.ok) {
       currentUser.username = data.username;
       renderUserHeader();

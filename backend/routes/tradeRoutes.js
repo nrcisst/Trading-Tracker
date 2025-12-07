@@ -70,6 +70,51 @@ router.get("/trades/year", (req, res) => {
     });
 });
 
+// Get comprehensive stats for a specific year
+router.get("/trades/year/stats", (req, res) => {
+    const { year } = req.query;
+    const userId = req.userId;
+
+    if (!year) {
+        return res.status(400).json({ error: "Year is required" });
+    }
+
+    const query = `
+        SELECT 
+            COUNT(*) as total_trades,
+            SUM(CASE WHEN pnl > 0 THEN 1 ELSE 0 END) as wins,
+            SUM(CASE WHEN pnl < 0 THEN 1 ELSE 0 END) as losses,
+            SUM(CASE WHEN pnl > 0 THEN pnl ELSE 0 END) as gross_profit,
+            ABS(SUM(CASE WHEN pnl < 0 THEN pnl ELSE 0 END)) as gross_loss,
+            MAX(pnl) as max_win,
+            MIN(pnl) as max_loss,
+            SUM(pnl) as net_pl
+        FROM trade_entries
+        WHERE user_id = ? AND YEAR(trade_date) = ?
+    `;
+
+    dbClient.get(query, [userId, year], (err, row) => {
+        if (err) {
+            console.error("[GET /api/trades/year/stats] DB error:", err.message);
+            return res.status(500).json({ error: "Database error retrieving yearly stats" });
+        }
+
+        // Format response
+        const stats = {
+            total_trades: row.total_trades || 0,
+            wins: row.wins || 0,
+            losses: row.losses || 0,
+            gross_profit: row.gross_profit || 0,
+            gross_loss: row.gross_loss || 0,
+            max_win: row.max_win || 0,
+            max_loss: row.max_loss || 0,
+            net_pl: row.net_pl || 0
+        };
+
+        res.json({ data: stats });
+    });
+});
+
 router.get("/trades/:date", (req, res) => {
     const dateKey = req.params.date;
     const userId = req.userId;
@@ -245,17 +290,17 @@ router.post("/entries", (req, res) => {
                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
     dbClient.run(insertQuery, [
-        userId, 
-        trade_date, 
-        ticker, 
-        direction || 'LONG', 
-        entry_price || 0, 
-        exit_price || 0, 
-        size || 0, 
-        pnl, 
-        notes || '', 
-        tag || null, 
-        confidence || null, 
+        userId,
+        trade_date,
+        ticker,
+        direction || 'LONG',
+        entry_price || 0,
+        exit_price || 0,
+        size || 0,
+        pnl,
+        notes || '',
+        tag || null,
+        confidence || null,
         setup_quality || null
     ], function (err) {
         if (err) {
@@ -328,13 +373,13 @@ router.put("/entries/:id", (req, res) => {
                          WHERE id = ? AND user_id = ?`;
 
     dbClient.run(updateQuery, [
-        ticker, 
-        direction || 'LONG', 
-        pnl, 
-        tag || null, 
-        confidence || null, 
-        setup_quality || null, 
-        id, 
+        ticker,
+        direction || 'LONG',
+        pnl,
+        tag || null,
+        confidence || null,
+        setup_quality || null,
+        id,
         userId
     ], function (err) {
         if (err) {
