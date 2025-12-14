@@ -349,6 +349,7 @@ let filterTicker = ''; // ticker filter
 let reviewMode = false;
 let reviewDays = []; // filtered days for review
 let currentReviewIndex = 0;
+let originalNotes = ''; // Track original notes for unsaved changes detection
 let yearMonthPl = {}; // month -> pl for current year
 let ytdPl = 0;
 let mtdPl = 0;
@@ -1453,11 +1454,13 @@ async function openDayModal(dateKey) {
   label.textContent = date.toDateString();
 
   notesInput.value = "";
+  originalNotes = ''; // Reset original notes
 
   try {
     const existing = await fetchDay(dateKey);
     if (existing) {
       notesInput.value = existing.notes ?? "";
+      originalNotes = existing.notes ?? ""; // Store original value for comparison
       // Auto-resize
       notesInput.style.height = 'auto';
       notesInput.style.height = (notesInput.scrollHeight) + 'px';
@@ -1500,18 +1503,18 @@ async function openDayModal(dateKey) {
   modal.classList.remove("hidden");
 
   // Click outside to close
-  const handleOutsideClick = (e) => {
+  const handleOutsideClick = async (e) => {
     if (e.target === modal) {
-      closeDayModal();
+      await closeDayModal();
       modal.removeEventListener('click', handleOutsideClick);
     }
   };
   modal.addEventListener('click', handleOutsideClick);
 
   // Add Esc key listener
-  const escHandler = (e) => {
+  const escHandler = async (e) => {
     if (e.key === 'Escape') {
-      closeDayModal();
+      await closeDayModal();
       document.removeEventListener('keydown', escHandler);
     }
   };
@@ -1691,8 +1694,34 @@ async function updateTradeEntry(id, payload) {
   }
 }
 
-function closeDayModal() {
+async function closeDayModal() {
   const modal = document.getElementById("day-modal");
+  const notesInput = document.getElementById("notes-input");
+  const currentNotes = notesInput.value;
+  const dateKey = modal.dataset.dateKey;
+
+  // Check if notes have changed
+  if (currentNotes !== originalNotes) {
+    const shouldSave = await confirm(
+      "You have unsaved notes. Would you like to save before closing?",
+      "Unsaved Notes"
+    );
+
+    if (shouldSave) {
+      try {
+        await saveDay(dateKey, { notes: currentNotes });
+        await refreshAppData();
+        showSuccess("Notes saved");
+      } catch (err) {
+        console.error("Error saving notes:", err);
+        showError("Failed to save notes");
+      }
+    }
+  }
+
+  // Reset tracking
+  originalNotes = '';
+
   document.body.style.overflow = '';
   modal.classList.add("hidden");
 }
@@ -1737,8 +1766,13 @@ function setupModalButtons() {
       saveBtn.disabled = true;
       saveBtn.textContent = "Saving...";
       await saveDay(dateKey, { notes });
+      originalNotes = notes; // Update to match saved value (avoid prompt on close)
       await refreshAppData();
-      closeDayModal();
+
+      // Close without prompting since we just saved
+      originalNotes = '';
+      document.body.style.overflow = '';
+      document.getElementById("day-modal").classList.add("hidden");
 
       showSuccess("Notes saved");
     } catch (err) {

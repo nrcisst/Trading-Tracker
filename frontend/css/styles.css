@@ -1,28 +1,49 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap');
 
 :root {
-  /* -- Core Palette -- */
-  --bg-app: #000000;
-  --bg-surface-1: rgba(255, 255, 255, 0.025);
-  --bg-surface-2: rgba(255, 255, 255, 0.045);
-  --bg-surface-hover: rgba(255, 255, 255, 0.08);
+  /* -- Enhanced Depth System (4 shades with HSL increments) -- */
+  --bg-app: hsl(0, 0%, 0%);
+  --bg-surface-1: hsl(0, 0%, 5%);
+  --bg-surface-2: hsl(0, 0%, 8%);
+  --bg-surface-3: hsl(0, 0%, 12%);
+  --bg-surface-hover: hsl(0, 0%, 14%);
 
   /* -- Borders & Effects -- */
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-medium: rgba(255, 255, 255, 0.15);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-medium: rgba(255, 255, 255, 0.12);
   --border-focus: rgba(255, 255, 255, 0.25);
+  --border-highlight: rgba(255, 255, 255, 0.15);
   --glass-blur: blur(40px);
-  --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 25px 80px rgba(0, 0, 0, 0.6);
+
+  /* -- Premium Shadow System (soft + dark combined) -- */
+  --shadow-sm:
+    0 2px 4px rgba(0, 0, 0, 0.3),
+    0 4px 8px rgba(0, 0, 0, 0.2);
+  --shadow-md:
+    0 4px 8px rgba(0, 0, 0, 0.4),
+    0 8px 24px rgba(0, 0, 0, 0.3);
+  --shadow-lg:
+    0 8px 16px rgba(0, 0, 0, 0.4),
+    0 24px 48px rgba(0, 0, 0, 0.4);
+  --shadow-xl:
+    0 12px 24px rgba(0, 0, 0, 0.5),
+    0 40px 80px rgba(0, 0, 0, 0.5);
   --shadow-glow: 0 0 40px rgba(255, 255, 255, 0.03);
+
+  /* -- Inner Highlight (light from top effect) -- */
+  --highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --highlight-strong: inset 0 1px 1px rgba(255, 255, 255, 0.12);
+
+  /* -- Sunken Effect (for inputs/recessed elements) -- */
+  --shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 
   /* -- Type & Color -- */
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
 
-  --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.65);
-  --text-tertiary: rgba(255, 255, 255, 0.4);
+  --text-primary: hsl(0, 0%, 100%);
+  --text-secondary: hsl(0, 0%, 70%);
+  --text-tertiary: hsl(0, 0%, 45%);
 
   --color-accent: #ffffff;
   --color-success: #34d399;
@@ -53,19 +74,34 @@
 
 /* Light Theme */
 body.theme-light {
-  --bg-app: #f5f5f5;
-  --bg-surface-1: rgba(255, 255, 255, 0.8);
-  --bg-surface-2: rgba(255, 255, 255, 0.95);
-  --bg-surface-hover: rgba(0, 0, 0, 0.04);
-  --border-subtle: rgba(0, 0, 0, 0.12);
-  --border-medium: rgba(0, 0, 0, 0.2);
-  --border-focus: rgba(0, 0, 0, 0.4);
-  --text-primary: #000000;
-  --text-secondary: rgba(0, 0, 0, 0.7);
-  --text-tertiary: rgba(0, 0, 0, 0.5);
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.1);
+  --bg-app: hsl(0, 0%, 96%);
+  --bg-surface-1: hsl(0, 0%, 100%);
+  --bg-surface-2: hsl(0, 0%, 98%);
+  --bg-surface-3: hsl(0, 0%, 95%);
+  --bg-surface-hover: hsl(0, 0%, 97%);
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --border-medium: rgba(0, 0, 0, 0.15);
+  --border-focus: rgba(0, 0, 0, 0.3);
+  --border-highlight: rgba(255, 255, 255, 0.8);
+  --text-primary: hsl(0, 0%, 10%);
+  --text-secondary: hsl(0, 0%, 35%);
+  --text-tertiary: hsl(0, 0%, 50%);
+  --shadow-sm:
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    0 2px 4px rgba(0, 0, 0, 0.03);
+  --shadow-md:
+    0 2px 4px rgba(0, 0, 0, 0.08),
+    0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-lg:
+    0 4px 8px rgba(0, 0, 0, 0.08),
+    0 12px 32px rgba(0, 0, 0, 0.1);
+  --shadow-xl:
+    0 8px 16px rgba(0, 0, 0, 0.1),
+    0 24px 48px rgba(0, 0, 0, 0.12);
   --shadow-glow: none;
+  --highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --highlight-strong: inset 0 1px 2px rgba(255, 255, 255, 1);
+  --shadow-inset: inset 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 /* Thin black outlines on all major elements in light mode */
@@ -114,8 +150,30 @@ body.theme-light .day-cell .date-number {
   color: #000000;
 }
 
+/* Keep white text for positive/negative cells in light mode (they have colored backgrounds) */
+body.theme-light .day-cell.positive .date-number,
+body.theme-light .day-cell.negative .date-number {
+  color: #ffffff;
+}
+
 body.theme-light .day-cell .pl-summary {
   color: #000000;
+}
+
+/* Keep white text for positive/negative P/L in light mode */
+body.theme-light .day-cell.positive .pl-summary,
+body.theme-light .day-cell.negative .pl-summary {
+  color: #ffffff;
+}
+
+/* Fix today indicator for light mode */
+body.theme-light .day-cell.today::before {
+  border-color: rgba(0, 0, 0, 0.4);
+}
+
+body.theme-light .day-cell.positive.today::before,
+body.theme-light .day-cell.negative.today::before {
+  border-color: rgba(255, 255, 255, 0.6);
 }
 
 body.theme-light #calendar {
@@ -262,7 +320,7 @@ body::after {
   max-width: 300px;
 }
 
-/* Premium Header */
+/* Premium Header with Depth */
 header {
   display: flex;
   justify-content: space-between;
@@ -270,21 +328,28 @@ header {
   gap: var(--space-lg);
   margin-bottom: var(--space-lg);
   padding: var(--space-md) var(--space-lg);
-  background: var(--bg-surface-1);
+  background: var(--bg-surface-2);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   border-radius: var(--radius-xl);
   border: 1px solid var(--border-subtle);
-  box-shadow: var(--shadow-sm), var(--shadow-glow);
+  border-top-color: var(--border-highlight);
+  box-shadow:
+    var(--shadow-md),
+    var(--shadow-glow),
+    var(--highlight-top);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   z-index: 100;
 }
 
 header:hover {
-  background: var(--bg-surface-2);
+  background: var(--bg-surface-3);
   border-color: var(--border-medium);
-  box-shadow: var(--shadow-lg), var(--shadow-glow);
+  box-shadow:
+    var(--shadow-lg),
+    var(--shadow-glow),
+    var(--highlight-strong);
 }
 
 h1 {
@@ -407,31 +472,45 @@ h1 {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-/* Primary Button Styling */
+/* Primary Button Styling with Depth */
 button {
-  background: var(--text-primary);
+  background: linear-gradient(180deg,
+      hsl(0, 0%, 100%) 0%,
+      hsl(0, 0%, 92%) 100%);
   color: var(--bg-app);
-  border: 1px solid transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-top-color: rgba(255, 255, 255, 0.25);
   padding: 0.6rem 1.2rem;
   border-radius: var(--radius-md);
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
   font-family: var(--font-sans);
-  font-weight: 500;
+  font-weight: 600;
   font-size: 0.95rem;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.2),
+    0 4px 8px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 button:hover {
-  background: #ffffff;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
+  background: linear-gradient(180deg,
+      hsl(0, 0%, 100%) 0%,
+      hsl(0, 0%, 95%) 100%);
+  transform: translateY(-3px);
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.25),
+    0 12px 24px rgba(255, 255, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 button:active {
-  transform: translateY(0);
+  transform: translateY(-1px);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 /* Stats Grid */
@@ -452,10 +531,11 @@ button:active {
   gap: var(--space-md);
 }
 
-/* Premium Stat Cards */
+/* Premium Stat Cards with Depth */
 .stat-card {
-  background: var(--bg-surface-1);
+  background: var(--bg-surface-2);
   border: 1px solid var(--border-subtle);
+  border-top-color: var(--border-highlight);
   border-radius: var(--radius-lg);
   padding: var(--space-md);
   display: flex;
@@ -463,25 +543,35 @@ button:active {
   gap: var(--space-xs);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
-  box-shadow: var(--shadow-sm);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow:
+    var(--shadow-sm),
+    var(--highlight-top);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
 }
 
+/* Top highlight gradient for depth illusion */
 .stat-card::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, transparent 100%);
   pointer-events: none;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
 
 .stat-card:hover {
-  transform: translateY(-4px);
-  background: var(--bg-surface-2);
+  transform: translateY(-6px);
+  background: var(--bg-surface-3);
   border-color: var(--border-medium);
-  box-shadow: var(--shadow-lg), var(--shadow-glow);
+  box-shadow:
+    var(--shadow-lg),
+    var(--shadow-glow),
+    var(--highlight-strong);
 }
 
 /* Stat Card Tooltips */
@@ -546,19 +636,39 @@ button:active {
   letter-spacing: -0.01em;
 }
 
-/* Charts */
+/* Charts with Depth */
 .chart-container {
-  background: var(--bg-surface-1);
+  background: var(--bg-surface-2);
   border: 1px solid var(--border-subtle);
+  border-top-color: var(--border-highlight);
   border-radius: var(--radius-lg);
   padding: 1.5rem;
   backdrop-filter: var(--glass-blur);
-  transition: all 0.2s;
+  box-shadow:
+    var(--shadow-sm),
+    var(--highlight-top);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.chart-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, transparent 100%);
+  pointer-events: none;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
 
 .chart-container:hover {
   border-color: var(--border-medium);
-  background: var(--bg-surface-2);
+  background: var(--bg-surface-3);
+  box-shadow:
+    var(--shadow-md),
+    var(--highlight-strong);
 }
 
 /* View Controls */
@@ -822,14 +932,16 @@ button:active {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .day-cell:hover {
-  transform: translateY(-3px) scale(1.03);
+  transform: translateY(-4px) scale(1.02);
   z-index: 5;
-  box-shadow: var(--shadow-lg), 0 0 30px rgba(255, 255, 255, 0.02);
+  box-shadow:
+    var(--shadow-lg),
+    0 0 40px rgba(255, 255, 255, 0.03);
   border-color: var(--border-medium);
 }
 
@@ -839,31 +951,33 @@ button:active {
 }
 
 .day-cell.positive {
-  background: linear-gradient(135deg, rgba(52, 211, 153, 0.1), rgba(52, 211, 153, 0.04));
-  border-color: rgba(52, 211, 153, 0.12);
+  background: linear-gradient(180deg, rgba(52, 211, 153, 0.15) 0%, rgba(52, 211, 153, 0.08) 100%);
+  border-color: rgba(52, 211, 153, 0.15);
+  border-top-color: rgba(52, 211, 153, 0.3);
 }
 
 .day-cell.positive:hover {
-  background: linear-gradient(135deg, rgba(52, 211, 153, 0.15), rgba(52, 211, 153, 0.06));
-  border-color: rgba(52, 211, 153, 0.25);
+  background: linear-gradient(180deg, rgba(52, 211, 153, 0.2) 0%, rgba(52, 211, 153, 0.1) 100%);
+  border-color: rgba(52, 211, 153, 0.35);
   box-shadow:
-    0 12px 40px rgba(52, 211, 153, 0.12),
-    inset 0 0 30px rgba(52, 211, 153, 0.04),
-    0 0 60px rgba(52, 211, 153, 0.08);
+    0 8px 24px rgba(52, 211, 153, 0.15),
+    0 24px 48px rgba(52, 211, 153, 0.1),
+    inset 0 1px 0 rgba(52, 211, 153, 0.25);
 }
 
 .day-cell.negative {
-  background: linear-gradient(135deg, rgba(248, 113, 113, 0.1), rgba(248, 113, 113, 0.04));
-  border-color: rgba(248, 113, 113, 0.12);
+  background: linear-gradient(180deg, rgba(248, 113, 113, 0.15) 0%, rgba(248, 113, 113, 0.08) 100%);
+  border-color: rgba(248, 113, 113, 0.15);
+  border-top-color: rgba(248, 113, 113, 0.3);
 }
 
 .day-cell.negative:hover {
-  background: linear-gradient(135deg, rgba(248, 113, 113, 0.15), rgba(248, 113, 113, 0.06));
-  border-color: rgba(248, 113, 113, 0.25);
+  background: linear-gradient(180deg, rgba(248, 113, 113, 0.2) 0%, rgba(248, 113, 113, 0.1) 100%);
+  border-color: rgba(248, 113, 113, 0.35);
   box-shadow:
-    0 12px 40px rgba(248, 113, 113, 0.12),
-    inset 0 0 30px rgba(248, 113, 113, 0.04),
-    0 0 60px rgba(248, 113, 113, 0.08);
+    0 8px 24px rgba(248, 113, 113, 0.15),
+    0 24px 48px rgba(248, 113, 113, 0.1),
+    inset 0 1px 0 rgba(248, 113, 113, 0.25);
 }
 
 .day-cell .date-number {
