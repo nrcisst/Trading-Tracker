@@ -8,34 +8,34 @@
   --bg-surface-3: hsl(0, 0%, 12%);
   --bg-surface-hover: hsl(0, 0%, 14%);
 
-  /* -- Borders & Effects -- */
-  --border-subtle: rgba(255, 255, 255, 0.06);
-  --border-medium: rgba(255, 255, 255, 0.12);
-  --border-focus: rgba(255, 255, 255, 0.25);
-  --border-highlight: rgba(255, 255, 255, 0.15);
+  /* -- Borders & Effects (HSL for intuitive adjustments) -- */
+  --border-subtle: hsl(0 0% 100% / 0.06);
+  --border-medium: hsl(0 0% 100% / 0.12);
+  --border-focus: hsl(0 0% 100% / 0.25);
+  --border-highlight: hsl(0 0% 100% / 0.15);
   --glass-blur: blur(40px);
 
-  /* -- Premium Shadow System (soft + dark combined) -- */
+  /* -- Premium Shadow System (HSL format) -- */
   --shadow-sm:
-    0 2px 4px rgba(0, 0, 0, 0.3),
-    0 4px 8px rgba(0, 0, 0, 0.2);
+    0 2px 4px hsl(0 0% 0% / 0.3),
+    0 4px 8px hsl(0 0% 0% / 0.2);
   --shadow-md:
-    0 4px 8px rgba(0, 0, 0, 0.4),
-    0 8px 24px rgba(0, 0, 0, 0.3);
+    0 4px 8px hsl(0 0% 0% / 0.4),
+    0 8px 24px hsl(0 0% 0% / 0.3);
   --shadow-lg:
-    0 8px 16px rgba(0, 0, 0, 0.4),
-    0 24px 48px rgba(0, 0, 0, 0.4);
+    0 8px 16px hsl(0 0% 0% / 0.4),
+    0 24px 48px hsl(0 0% 0% / 0.4);
   --shadow-xl:
-    0 12px 24px rgba(0, 0, 0, 0.5),
-    0 40px 80px rgba(0, 0, 0, 0.5);
-  --shadow-glow: 0 0 40px rgba(255, 255, 255, 0.03);
+    0 12px 24px hsl(0 0% 0% / 0.5),
+    0 40px 80px hsl(0 0% 0% / 0.5);
+  --shadow-glow: 0 0 40px hsl(0 0% 100% / 0.03);
 
   /* -- Inner Highlight (light from top effect) -- */
-  --highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  --highlight-strong: inset 0 1px 1px rgba(255, 255, 255, 0.12);
+  --highlight-top: inset 0 1px 0 hsl(0 0% 100% / 0.08);
+  --highlight-strong: inset 0 1px 1px hsl(0 0% 100% / 0.12);
 
   /* -- Sunken Effect (for inputs/recessed elements) -- */
-  --shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-inset: inset 0 2px 4px hsl(0 0% 0% / 0.3);
 
   /* -- Type & Color -- */
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -45,9 +45,9 @@
   --text-secondary: hsl(0, 0%, 70%);
   --text-tertiary: hsl(0, 0%, 45%);
 
-  --color-accent: #ffffff;
-  --color-success: #34d399;
-  --color-danger: #f87171;
+  --color-accent: hsl(0 0% 100%);
+  --color-success: hsl(160 65% 52%);
+  --color-danger: hsl(0 91% 71%);
 
   /* -- Sizing -- */
   --radius-sm: 8px;
@@ -79,29 +79,29 @@ body.theme-light {
   --bg-surface-2: hsl(0, 0%, 98%);
   --bg-surface-3: hsl(0, 0%, 95%);
   --bg-surface-hover: hsl(0, 0%, 97%);
-  --border-subtle: rgba(0, 0, 0, 0.08);
-  --border-medium: rgba(0, 0, 0, 0.15);
-  --border-focus: rgba(0, 0, 0, 0.3);
-  --border-highlight: rgba(255, 255, 255, 0.8);
+  --border-subtle: hsl(0 0% 0% / 0.08);
+  --border-medium: hsl(0 0% 0% / 0.15);
+  --border-focus: hsl(0 0% 0% / 0.3);
+  --border-highlight: hsl(0 0% 100% / 0.8);
   --text-primary: hsl(0, 0%, 10%);
   --text-secondary: hsl(0, 0%, 35%);
   --text-tertiary: hsl(0, 0%, 50%);
   --shadow-sm:
-    0 1px 2px rgba(0, 0, 0, 0.05),
-    0 2px 4px rgba(0, 0, 0, 0.03);
+    0 1px 2px hsl(0 0% 0% / 0.05),
+    0 2px 4px hsl(0 0% 0% / 0.03);
   --shadow-md:
-    0 2px 4px rgba(0, 0, 0, 0.08),
-    0 4px 12px rgba(0, 0, 0, 0.06);
+    0 2px 4px hsl(0 0% 0% / 0.08),
+    0 4px 12px hsl(0 0% 0% / 0.06);
   --shadow-lg:
-    0 4px 8px rgba(0, 0, 0, 0.08),
-    0 12px 32px rgba(0, 0, 0, 0.1);
+    0 4px 8px hsl(0 0% 0% / 0.08),
+    0 12px 32px hsl(0 0% 0% / 0.1);
   --shadow-xl:
-    0 8px 16px rgba(0, 0, 0, 0.1),
-    0 24px 48px rgba(0, 0, 0, 0.12);
+    0 8px 16px hsl(0 0% 0% / 0.1),
+    0 24px 48px hsl(0 0% 0% / 0.12);
   --shadow-glow: none;
-  --highlight-top: inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  --highlight-strong: inset 0 1px 2px rgba(255, 255, 255, 1);
-  --shadow-inset: inset 0 1px 3px rgba(0, 0, 0, 0.08);
+  --highlight-top: inset 0 1px 0 hsl(0 0% 100% / 0.9);
+  --highlight-strong: inset 0 1px 2px hsl(0 0% 100% / 1);
+  --shadow-inset: inset 0 1px 3px hsl(0 0% 0% / 0.08);
 }
 
 /* Thin black outlines on all major elements in light mode */
@@ -117,19 +117,19 @@ body.theme-light .trade-entry-item,
 body.theme-light input,
 body.theme-light select,
 body.theme-light textarea {
-  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid hsl(0 0% 0% / 0.15) !important;
 }
 
 /* Invert buttons in light mode */
 body.theme-light button {
-  background: #111111;
-  color: #ffffff;
-  border: 1px solid #000000 !important;
+  background: hsl(0 0% 7%);
+  color: hsl(0 0% 100%);
+  border: 1px solid hsl(0 0% 0%) !important;
 }
 
 body.theme-light button:hover {
-  background: #000000;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  background: hsl(0 0% 0%);
+  box-shadow: 0 8px 25px hsl(0 0% 0% / 0.2);
 }
 
 body.theme-light .mode-btn,
@@ -137,47 +137,91 @@ body.theme-light .view-btn,
 body.theme-light .theme-btn {
   background: transparent;
   color: var(--text-secondary);
-  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  border: 1px solid hsl(0 0% 0% / 0.1) !important;
 }
 
 body.theme-light .mode-btn.active,
 body.theme-light .view-btn.active {
-  background: rgba(0, 0, 0, 0.08);
+  background: hsl(0 0% 0% / 0.08);
+  color: var(--text-primary);
+}
+
+body.theme-light .mode-btn:hover,
+body.theme-light .view-btn:hover {
+  background: hsl(0 0% 0% / 0.08);
   color: var(--text-primary);
 }
 
 body.theme-light .day-cell .date-number {
-  color: #000000;
+  color: hsl(0 0% 0%);
 }
 
 /* Keep white text for positive/negative cells in light mode (they have colored backgrounds) */
 body.theme-light .day-cell.positive .date-number,
 body.theme-light .day-cell.negative .date-number {
-  color: #ffffff;
+  color: hsl(0 0% 100%);
 }
 
 body.theme-light .day-cell .pl-summary {
-  color: #000000;
+  color: hsl(0 0% 0%);
 }
 
 /* Keep white text for positive/negative P/L in light mode */
 body.theme-light .day-cell.positive .pl-summary,
 body.theme-light .day-cell.negative .pl-summary {
-  color: #ffffff;
+  color: hsl(0 0% 100%);
 }
 
 /* Fix today indicator for light mode */
 body.theme-light .day-cell.today::before {
-  border-color: rgba(0, 0, 0, 0.4);
+  border-color: hsl(0 0% 0% / 0.4);
 }
 
 body.theme-light .day-cell.positive.today::before,
 body.theme-light .day-cell.negative.today::before {
-  border-color: rgba(255, 255, 255, 0.6);
+  border-color: hsl(0 0% 100%);
 }
 
 body.theme-light #calendar {
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  border: 1px solid hsl(0 0% 0% / 0.15);
+  background: hsl(0 0% 80%);
+  /* Clean gap color for light mode */
+}
+
+/* Fix neutral/empty cells in light mode */
+body.theme-light .day-cell.neutral,
+body.theme-light .day-cell.empty {
+  background: var(--bg-surface-1);
+}
+
+/* Light mode calendar tooltip */
+body.theme-light .calendar-tooltip {
+  background: hsl(0 0% 100% / 0.98);
+  border: 1px solid hsl(0 0% 0% / 0.15);
+  box-shadow: 0 10px 30px hsl(0 0% 0% / 0.15);
+}
+
+body.theme-light .calendar-tooltip .tooltip-notes {
+  border-top-color: hsl(0 0% 0% / 0.1);
+}
+
+/* Light mode stat card tooltip */
+body.theme-light .stat-card[data-tooltip]::after {
+  background: hsl(0 0% 100% / 0.95);
+  color: var(--text-primary);
+  border: 1px solid hsl(0 0% 0% / 0.15);
+  box-shadow: 0 4px 12px hsl(0 0% 0% / 0.1);
+}
+
+/* Light mode confirmation dialog */
+body.theme-light .confirm-overlay {
+  background: hsl(0 0% 0% / 0.4);
+}
+
+body.theme-light .confirm-dialog {
+  background: hsl(0 0% 100% / 0.98);
+  border: 1px solid hsl(0 0% 0% / 0.15);
+  box-shadow: 0 20px 60px hsl(0 0% 0% / 0.2);
 }
 
 /* Theme Toggle Button */
@@ -233,9 +277,9 @@ body::before {
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(ellipse 80% 50% at 20% 10%, rgba(52, 211, 153, 0.03), transparent),
-    radial-gradient(ellipse 60% 40% at 80% 90%, rgba(248, 113, 113, 0.02), transparent),
-    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.01), transparent 70%);
+    radial-gradient(ellipse 80% 50% at 20% 10%, hsl(160 65% 52% / 0.03), transparent),
+    radial-gradient(ellipse 60% 40% at 80% 90%, hsl(0 91% 71% / 0.02), transparent),
+    radial-gradient(circle at 50% 50%, hsl(0 0% 100% / 0.01), transparent 70%);
   pointer-events: none;
   z-index: -2;
 }
@@ -463,13 +507,13 @@ h1 {
 
 .mode-btn:hover {
   color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.05);
+  background: hsl(0 0% 100% / 0.05);
 }
 
 .mode-btn.active {
   background: var(--bg-surface-hover);
   color: var(--text-primary);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 4px hsl(0 0% 0% / 0.2);
 }
 
 /* Primary Button Styling with Depth */
@@ -478,8 +522,8 @@ button {
       hsl(0, 0%, 100%) 0%,
       hsl(0, 0%, 92%) 100%);
   color: var(--bg-app);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-top-color: rgba(255, 255, 255, 0.25);
+  border: 1px solid hsl(0 0% 100% / 0.15);
+  border-top-color: hsl(0 0% 100% / 0.25);
   padding: 0.6rem 1.2rem;
   border-radius: var(--radius-md);
   cursor: pointer;
@@ -490,9 +534,9 @@ button {
   position: relative;
   overflow: hidden;
   box-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.2),
-    0 4px 8px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    0 2px 4px hsl(0 0% 0% / 0.2),
+    0 4px 8px hsl(0 0% 0% / 0.1),
+    inset 0 1px 0 hsl(0 0% 100% / 0.4);
 }
 
 button:hover {
@@ -501,16 +545,16 @@ button:hover {
       hsl(0, 0%, 95%) 100%);
   transform: translateY(-3px);
   box-shadow:
-    0 4px 8px rgba(0, 0, 0, 0.25),
-    0 12px 24px rgba(255, 255, 255, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    0 4px 8px hsl(0 0% 0% / 0.25),
+    0 12px 24px hsl(0 0% 100% / 0.08),
+    inset 0 1px 0 hsl(0 0% 100% / 0.5);
 }
 
 button:active {
   transform: translateY(-1px);
   box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    0 1px 2px hsl(0 0% 0% / 0.2),
+    inset 0 1px 0 hsl(0 0% 100% / 0.3);
 }
 
 /* Stats Grid */
@@ -559,7 +603,7 @@ button:active {
   left: 0;
   right: 0;
   height: 50%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, transparent 100%);
+  background: linear-gradient(180deg, hsl(0 0% 100% / 0.04) 0%, transparent 100%);
   pointer-events: none;
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
@@ -581,7 +625,7 @@ button:active {
   bottom: 100%;
   left: 50%;
   transform: translateX(-50%) translateY(-8px);
-  background: rgba(0, 0, 0, 0.9);
+  background: hsl(0 0% 0% / 0.9);
   color: var(--text-primary);
   padding: 0.5rem 0.75rem;
   border-radius: var(--radius-sm);
@@ -658,7 +702,7 @@ button:active {
   left: 0;
   right: 0;
   height: 40%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, transparent 100%);
+  background: linear-gradient(180deg, hsl(0 0% 100% / 0.02) 0%, transparent 100%);
   pointer-events: none;
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
@@ -705,13 +749,13 @@ button:active {
 
 .view-btn:hover {
   color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.05);
+  background: hsl(0 0% 100% / 0.05);
 }
 
 .view-btn.active {
   background: var(--bg-surface-hover);
   color: var(--text-primary);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px hsl(0 0% 0% / 0.1);
 }
 
 /* Base Input Styles (Shared) */
@@ -743,7 +787,7 @@ button:active {
   outline: none;
   background: var(--bg-surface-2);
   border-color: var(--text-tertiary);
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 0 2px hsl(0 0% 100% / 0.05);
 }
 
 /* Journal Entries */
@@ -867,8 +911,8 @@ button:active {
 
 .year-cell:hover {
   transform: translateY(-3px) rotateX(1.5deg);
-  border-color: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  border-color: hsl(0 0% 100% / 0.12);
+  box-shadow: 0 20px 50px hsl(0 0% 0% / 0.4), 0 0 0 1px hsl(0 0% 100% / 0.05);
 }
 
 @keyframes fadeUp {
@@ -911,15 +955,15 @@ button:active {
 }
 
 .year-cell.positive {
-  background: color-mix(in srgb, var(--positive-color), #0a0a0a 65%);
+  background: color-mix(in srgb, var(--positive-color), hsl(0 0% 4%) 65%);
 }
 
 .year-cell.negative {
-  background: color-mix(in srgb, var(--negative-color), #0a0a0a 65%);
+  background: color-mix(in srgb, var(--negative-color), hsl(0 0% 4%) 65%);
 }
 
 .year-cell.neutral {
-  background: #080808;
+  background: hsl(0 0% 3%);
 }
 
 .day-cell {
@@ -933,7 +977,7 @@ button:active {
   justify-content: center;
   align-items: center;
   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 1px solid rgba(255, 255, 255, 0.03);
+  border: 1px solid hsl(0 0% 100% / 0.03);
 }
 
 .day-cell:hover {
@@ -941,7 +985,7 @@ button:active {
   z-index: 5;
   box-shadow:
     var(--shadow-lg),
-    0 0 40px rgba(255, 255, 255, 0.03);
+    0 0 40px hsl(0 0% 100% / 0.03);
   border-color: var(--border-medium);
 }
 
@@ -951,40 +995,40 @@ button:active {
 }
 
 .day-cell.positive {
-  background: linear-gradient(180deg, rgba(52, 211, 153, 0.15) 0%, rgba(52, 211, 153, 0.08) 100%);
-  border-color: rgba(52, 211, 153, 0.15);
-  border-top-color: rgba(52, 211, 153, 0.3);
+  background: linear-gradient(180deg, hsl(160 65% 52% / 0.15) 0%, hsl(160 65% 52% / 0.08) 100%);
+  border-color: hsl(160 65% 52% / 0.15);
+  border-top-color: hsl(160 65% 52% / 0.3);
 }
 
 .day-cell.positive:hover {
-  background: linear-gradient(180deg, rgba(52, 211, 153, 0.2) 0%, rgba(52, 211, 153, 0.1) 100%);
-  border-color: rgba(52, 211, 153, 0.35);
+  background: linear-gradient(180deg, hsl(160 65% 52% / 0.2) 0%, hsl(160 65% 52% / 0.1) 100%);
+  border-color: hsl(160 65% 52% / 0.35);
   box-shadow:
-    0 8px 24px rgba(52, 211, 153, 0.15),
-    0 24px 48px rgba(52, 211, 153, 0.1),
-    inset 0 1px 0 rgba(52, 211, 153, 0.25);
+    0 8px 24px hsl(160 65% 52% / 0.15),
+    0 24px 48px hsl(160 65% 52% / 0.1),
+    inset 0 1px 0 hsl(160 65% 52% / 0.25);
 }
 
 .day-cell.negative {
-  background: linear-gradient(180deg, rgba(248, 113, 113, 0.15) 0%, rgba(248, 113, 113, 0.08) 100%);
-  border-color: rgba(248, 113, 113, 0.15);
-  border-top-color: rgba(248, 113, 113, 0.3);
+  background: linear-gradient(180deg, hsl(0 91% 71% / 0.15) 0%, hsl(0 91% 71% / 0.08) 100%);
+  border-color: hsl(0 91% 71% / 0.15);
+  border-top-color: hsl(0 91% 71% / 0.3);
 }
 
 .day-cell.negative:hover {
-  background: linear-gradient(180deg, rgba(248, 113, 113, 0.2) 0%, rgba(248, 113, 113, 0.1) 100%);
-  border-color: rgba(248, 113, 113, 0.35);
+  background: linear-gradient(180deg, hsl(0 91% 71% / 0.2) 0%, hsl(0 91% 71% / 0.1) 100%);
+  border-color: hsl(0 91% 71% / 0.35);
   box-shadow:
-    0 8px 24px rgba(248, 113, 113, 0.15),
-    0 24px 48px rgba(248, 113, 113, 0.1),
-    inset 0 1px 0 rgba(248, 113, 113, 0.25);
+    0 8px 24px hsl(0 91% 71% / 0.15),
+    0 24px 48px hsl(0 91% 71% / 0.1),
+    inset 0 1px 0 hsl(0 91% 71% / 0.25);
 }
 
 .day-cell .date-number {
   font-family: var(--font-sans);
   font-size: 1rem;
   font-weight: 700;
-  color: #ffffff;
+  color: hsl(0 0% 100%);
   /* Force White */
   position: absolute;
   top: 0.75rem;
@@ -995,7 +1039,7 @@ button:active {
 }
 
 .day-cell:hover .date-number {
-  color: #ffffff;
+  color: hsl(0 0% 100%);
   opacity: 1;
   transform: scale(1.1);
 }
@@ -1011,11 +1055,11 @@ button:active {
 }
 
 .day-cell.positive .pl-summary {
-  color: #ffffff;
+  color: hsl(0 0% 100%);
 }
 
 .day-cell.negative .pl-summary {
-  color: #ffffff;
+  color: hsl(0 0% 100%);
 }
 
 /* Today Indicator */
@@ -1027,14 +1071,14 @@ button:active {
   content: '';
   position: absolute;
   inset: 4px;
-  border: 2px solid rgba(255, 255, 255, 0.4);
+  border: 2px solid hsl(0 0% 100% / 0.4);
   border-radius: var(--radius-md);
   pointer-events: none;
   animation: todayPulse 2s ease-in-out infinite;
 }
 
 .day-cell.today .date-number {
-  color: #ffffff;
+  color: hsl(0 0% 100%);
   font-weight: 700;
 }
 
@@ -1042,13 +1086,13 @@ button:active {
 
   0%,
   100% {
-    border-color: rgba(255, 255, 255, 0.3);
-    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05);
+    border-color: hsl(0 0% 100% / 0.3);
+    box-shadow: inset 0 0 10px hsl(0 0% 100% / 0.05);
   }
 
   50% {
-    border-color: rgba(255, 255, 255, 0.5);
-    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.1);
+    border-color: hsl(0 0% 100% / 0.5);
+    box-shadow: inset 0 0 20px hsl(0 0% 100% / 0.1);
   }
 }
 
@@ -1061,7 +1105,7 @@ button:active {
 #day-modal {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.65);
+  background: hsl(0 0% 0% / 0.65);
   backdrop-filter: blur(8px);
   display: flex;
   justify-content: flex-end;
@@ -1104,7 +1148,7 @@ button:active {
 .modal-content {
   background: var(--bg-app);
   border-left: 1px solid var(--border-medium);
-  box-shadow: -20px 0 80px rgba(0, 0, 0, 0.8);
+  box-shadow: -20px 0 80px hsl(0 0% 0% / 0.8);
   width: 600px;
   max-width: 100vw;
   height: 100vh;
@@ -1218,12 +1262,12 @@ button:active {
 
 .summary-value.positive {
   color: var(--color-success);
-  text-shadow: 0 0 20px rgba(52, 211, 153, 0.2);
+  text-shadow: 0 0 20px hsl(160 65% 52% / 0.2);
 }
 
 .summary-value.negative {
   color: var(--color-danger);
-  text-shadow: 0 0 20px rgba(248, 113, 113, 0.2);
+  text-shadow: 0 0 20px hsl(0 91% 71% / 0.2);
 }
 
 /* Expansive Notes Section */
@@ -1303,9 +1347,9 @@ label[for="notes-input"] {
 .add-trade-form input,
 .add-trade-form select {
   width: 100%;
-  background: #000;
+  background: hsl(0 0% 0%);
   border: 1px solid var(--border-subtle);
-  color: #fff;
+  color: hsl(0 0% 100%);
   padding: 0.6rem;
   border-radius: var(--radius-md);
   height: 42px;
@@ -1329,8 +1373,8 @@ label[for="notes-input"] {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #fff;
-  color: #000;
+  background: hsl(0 0% 100%);
+  color: hsl(0 0% 0%);
   font-weight: 600;
 }
 
@@ -1355,65 +1399,65 @@ label[for="notes-input"] {
   font-size: 0.7rem;
   padding: 0.2rem 0.5rem;
   border-radius: 6px;
-  background: rgba(255, 255, 255, 0.08);
+  background: hsl(0 0% 100% / 0.08);
   color: var(--text-secondary);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid hsl(0 0% 100% / 0.08);
   font-weight: 500;
   transition: all 0.2s;
 }
 
 /* Color-Coded Tags */
 .trade-badge.tag-breakout {
-  background: rgba(59, 130, 246, 0.15);
-  color: #60a5fa;
-  border-color: rgba(59, 130, 246, 0.25);
+  background: hsl(217 91% 60% / 0.15);
+  color: hsl(217 91% 68%);
+  border-color: hsl(217 91% 60% / 0.25);
 }
 
 .trade-badge.tag-pullback {
-  background: rgba(168, 85, 247, 0.15);
-  color: #c084fc;
-  border-color: rgba(168, 85, 247, 0.25);
+  background: hsl(271 76% 65% / 0.15);
+  color: hsl(271 76% 75%);
+  border-color: hsl(271 76% 65% / 0.25);
 }
 
 .trade-badge.tag-reversal {
-  background: rgba(251, 146, 60, 0.15);
-  color: #fb923c;
-  border-color: rgba(251, 146, 60, 0.25);
+  background: hsl(27 96% 61% / 0.15);
+  color: hsl(27 96% 61%);
+  border-color: hsl(27 96% 61% / 0.25);
 }
 
 .trade-badge.tag-scalp {
-  background: rgba(34, 211, 238, 0.15);
-  color: #22d3ee;
-  border-color: rgba(34, 211, 238, 0.25);
+  background: hsl(186 94% 53% / 0.15);
+  color: hsl(186 94% 53%);
+  border-color: hsl(186 94% 53% / 0.25);
 }
 
 .trade-badge.tag-swing {
-  background: rgba(236, 72, 153, 0.15);
-  color: #f472b6;
-  border-color: rgba(236, 72, 153, 0.25);
+  background: hsl(330 81% 60% / 0.15);
+  color: hsl(330 81% 71%);
+  border-color: hsl(330 81% 60% / 0.25);
 }
 
 .trade-badge.confidence {
-  background: rgba(255, 255, 255, 0.06);
+  background: hsl(0 0% 100% / 0.06);
   color: var(--text-tertiary);
 }
 
 .trade-badge.quality-a {
-  background: rgba(52, 211, 153, 0.15);
+  background: hsl(160 65% 52% / 0.15);
   color: var(--color-success);
-  border-color: rgba(52, 211, 153, 0.25);
+  border-color: hsl(160 65% 52% / 0.25);
 }
 
 .trade-badge.quality-b {
-  background: rgba(250, 204, 21, 0.15);
-  color: #facc15;
-  border-color: rgba(250, 204, 21, 0.25);
+  background: hsl(48 97% 53% / 0.15);
+  color: hsl(48 97% 53%);
+  border-color: hsl(48 97% 53% / 0.25);
 }
 
 .trade-badge.quality-c {
-  background: rgba(248, 113, 113, 0.15);
+  background: hsl(0 91% 71% / 0.15);
   color: var(--color-danger);
-  border-color: rgba(248, 113, 113, 0.25);
+  border-color: hsl(0 91% 71% / 0.25);
 }
 
 
@@ -1443,15 +1487,15 @@ label[for="notes-input"] {
   justify-content: flex-end;
   gap: 1rem;
   padding-top: 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid hsl(0 0% 100% / 0.05);
 }
 
 #save-day,
 #close-modal {
-  background: rgba(255, 255, 255, 0.05);
+  background: hsl(0 0% 100% / 0.05);
   color: var(--text-primary);
   font-weight: 600;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid hsl(0 0% 100% / 0.1);
   padding: 0.75rem 1.5rem;
   border-radius: 10px;
   cursor: pointer;
@@ -1459,29 +1503,29 @@ label[for="notes-input"] {
 }
 
 #save-day {
-  background: #fff;
-  color: #000;
-  border-color: #fff;
+  background: hsl(0 0% 100%);
+  color: hsl(0 0% 0%);
+  border-color: hsl(0 0% 100%);
 }
 
 #save-day:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px hsl(0 0% 100% / 0.2);
 }
 
 #close-modal:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: hsl(0 0% 100% / 0.1);
+  border-color: hsl(0 0% 100% / 0.2);
 }
 
 /* Trade Entries Section */
 .add-trade-form {
-  background: rgba(255, 255, 255, 0.03);
+  background: hsl(0 0% 100% / 0.03);
   padding: 1.5rem;
   border-radius: 16px;
   margin-top: 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  border: 1px solid hsl(0 0% 100% / 0.08);
+  box-shadow: 0 16px 40px hsl(0 0% 0% / 0.35);
 }
 
 .add-trade-form h4 {
@@ -1507,8 +1551,8 @@ label[for="notes-input"] {
 }
 
 #add-trade-btn {
-  background: linear-gradient(135deg, #fff 0%, #e0e0e0 100%);
-  color: #000;
+  background: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(0 0% 88%) 100%);
+  color: hsl(0 0% 0%);
   border: none;
   padding: 0 1.5rem;
   border-radius: 10px;
@@ -1516,14 +1560,14 @@ label[for="notes-input"] {
   font-weight: 600;
   font-size: 0.9rem;
   transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px hsl(0 0% 100% / 0.1);
   height: 42px;
   white-space: nowrap;
 }
 
 #add-trade-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 6px 16px hsl(0 0% 100% / 0.2);
 }
 
 #trade-entries-list {
@@ -1541,12 +1585,12 @@ label[for="notes-input"] {
 }
 
 #trade-entries-list::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.02);
+  background: hsl(0 0% 100% / 0.02);
   border-radius: 3px;
 }
 
 #trade-entries-list::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: hsl(0 0% 100% / 0.1);
   border-radius: 3px;
 }
 
@@ -1554,11 +1598,11 @@ label[for="notes-input"] {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.01) 100%);
+  background: linear-gradient(90deg, hsl(0 0% 100% / 0.02) 0%, hsl(0 0% 100% / 0.01) 100%);
   padding: 1rem;
   border-radius: var(--radius-md);
   font-size: 0.9rem;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid hsl(0 0% 100% / 0.05);
   transition: all 0.2s ease;
   animation: slideInUp 0.3s ease-out;
 }
@@ -1576,8 +1620,8 @@ label[for="notes-input"] {
 }
 
 .trade-entry-item:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.1);
+  background: hsl(0 0% 100% / 0.05);
+  border-color: hsl(0 0% 100% / 0.1);
   transform: translateX(4px);
 }
 
@@ -1609,15 +1653,15 @@ label[for="notes-input"] {
 }
 
 .trade-pl.positive {
-  color: #4ade80;
+  color: hsl(142 69% 58%);
 }
 
 .trade-pl.negative {
-  color: #f87171;
+  color: hsl(0 91% 71%);
 }
 
 .delete-trade-btn {
-  background: rgba(255, 255, 255, 0.05);
+  background: hsl(0 0% 100% / 0.05);
   border: none;
   color: var(--text-secondary);
   cursor: pointer;
@@ -1632,8 +1676,8 @@ label[for="notes-input"] {
 }
 
 .delete-trade-btn:hover {
-  background: rgba(248, 113, 113, 0.1);
-  color: #f87171;
+  background: hsl(0 91% 71% / 0.1);
+  color: hsl(0 91% 71%);
 }
 
 /* Toast Notifications */
@@ -1651,15 +1695,15 @@ label[for="notes-input"] {
 /* Calendar Tooltip */
 .calendar-tooltip {
   position: absolute;
-  background: rgba(13, 13, 13, 0.98);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: hsl(0 0% 5% / 0.98);
+  border: 1px solid hsl(0 0% 100% / 0.15);
   border-radius: 8px;
   padding: 0.75rem 1rem;
   z-index: 1000;
   pointer-events: none;
   font-size: 0.85rem;
   min-width: 200px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 30px hsl(0 0% 0% / 0.5);
   backdrop-filter: blur(10px);
 }
 
@@ -1676,19 +1720,19 @@ label[for="notes-input"] {
 .confirm-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: hsl(0 0% 0% / 0.7);
   backdrop-filter: blur(4px);
 }
 
 .confirm-dialog {
   position: relative;
-  background: rgba(17, 17, 17, 0.98);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: hsl(0 0% 7% / 0.98);
+  border: 1px solid hsl(0 0% 100% / 0.1);
   border-radius: 16px;
   padding: 2rem;
   min-width: 400px;
   max-width: 500px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 20px 60px hsl(0 0% 0% / 0.5);
   animation: confirmSlideIn 0.2s ease-out;
 }
 
@@ -1723,9 +1767,9 @@ label[for="notes-input"] {
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.05);
+  background: hsl(0 0% 100% / 0.05);
   color: var(--text-primary);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid hsl(0 0% 100% / 0.1);
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   cursor: pointer;
@@ -1735,14 +1779,14 @@ label[for="notes-input"] {
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: hsl(0 0% 100% / 0.1);
+  border-color: hsl(0 0% 100% / 0.2);
 }
 
 .btn-danger {
-  background: #c82222;
-  color: white;
-  border: 1px solid #c82222;
+  background: hsl(0 72% 46%);
+  color: hsl(0 0% 100%);
+  border: 1px solid hsl(0 72% 46%);
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   cursor: pointer;
@@ -1753,10 +1797,10 @@ label[for="notes-input"] {
 }
 
 .btn-danger:hover {
-  background: #a01d1d;
-  border-color: #a01d1d;
+  background: hsl(0 70% 37%);
+  border-color: hsl(0 70% 37%);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(200, 34, 34, 0.3);
+  box-shadow: 0 4px 12px hsl(0 72% 46% / 0.3);
 }
 
 .calendar-tooltip .tooltip-date {
@@ -1792,16 +1836,16 @@ label[for="notes-input"] {
   font-style: italic;
   margin-top: 0.5rem;
   padding-top: 0.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid hsl(0 0% 100% / 0.1);
 }
 
 .toast {
-  background: linear-gradient(145deg, rgba(15, 15, 15, 0.95), rgba(15, 15, 15, 0.8));
-  color: white;
+  background: linear-gradient(145deg, hsl(0 0% 6% / 0.95), hsl(0 0% 6% / 0.8));
+  color: hsl(0 0% 100%);
   padding: 1rem 1.5rem;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.5);
+  border: 1px solid hsl(0 0% 100% / 0.12);
+  box-shadow: 0 18px 35px hsl(0 0% 0% / 0.5);
   backdrop-filter: blur(12px);
   font-size: 0.9rem;
   display: flex;
@@ -1813,11 +1857,11 @@ label[for="notes-input"] {
 }
 
 .toast.success {
-  border-left: 4px solid #4ade80;
+  border-left: 4px solid hsl(142 69% 58%);
 }
 
 .toast.error {
-  border-left: 4px solid #f87171;
+  border-left: 4px solid hsl(0 91% 71%);
 }
 
 @keyframes slideIn {
@@ -1845,26 +1889,26 @@ label[for="notes-input"] {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)), var(--bg-color);
+  background: linear-gradient(160deg, hsl(0 0% 100% / 0.05), hsl(0 0% 100% / 0.02)), var(--bg-color);
   padding: 2rem;
 }
 
 .auth-box {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+  background: linear-gradient(180deg, hsl(0 0% 100% / 0.08), hsl(0 0% 100% / 0.03));
   backdrop-filter: blur(14px);
   padding: 3rem;
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  border: 1px solid hsl(0 0% 100% / 0.08);
+  box-shadow: 0 22px 50px hsl(0 0% 0% / 0.4), 0 0 0 1px hsl(0 0% 100% / 0.05);
   width: 100%;
   max-width: 420px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .auth-box:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.45);
+  background: hsl(0 0% 100% / 0.1);
+  border-color: hsl(0 0% 100% / 0.12);
+  box-shadow: 0 28px 60px hsl(0 0% 0% / 0.45);
 }
 
 .auth-box h1 {
@@ -1894,26 +1938,26 @@ label[for="notes-input"] {
   width: 100%;
   padding: 14px 16px;
   margin-bottom: 1rem;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: hsl(0 0% 100% / 0.06);
+  border: 1px solid hsl(0 0% 100% / 0.14);
   border-radius: 10px;
   font-size: 15px;
   color: var(--text-primary);
   box-sizing: border-box;
   font-family: inherit;
   transition: all 0.2s;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.04);
 }
 
 .auth-box input:focus {
   outline: none;
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(120, 255, 214, 0.6);
-  box-shadow: 0 0 0 3px rgba(120, 255, 214, 0.18);
+  background: hsl(0 0% 100% / 0.1);
+  border-color: hsl(160 100% 73% / 0.6);
+  box-shadow: 0 0 0 3px hsl(160 100% 73% / 0.18);
 }
 
 .auth-box input::placeholder {
-  color: rgba(255, 255, 255, 0.4);
+  color: hsl(0 0% 100% / 0.4);
 }
 
 .auth-box button {
@@ -1931,9 +1975,9 @@ label[for="notes-input"] {
 }
 
 .auth-box button:hover {
-  background: rgba(255, 255, 255, 0.9);
+  background: hsl(0 0% 100% / 0.9);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px hsl(0 0% 100% / 0.2);
 }
 
 .auth-box button:active {
@@ -1943,7 +1987,7 @@ label[for="notes-input"] {
 .auth-box p {
   text-align: center;
   margin-top: 1.5rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: hsl(0 0% 100% / 0.6);
   font-size: 14px;
 }
 
@@ -1965,9 +2009,9 @@ label[for="notes-input"] {
 }
 
 .oauth-divider span {
-  background: rgba(255, 255, 255, 0.03);
+  background: hsl(0 0% 100% / 0.03);
   padding: 0 1rem;
-  color: rgba(255, 255, 255, 0.4);
+  color: hsl(0 0% 100% / 0.4);
   font-size: 13px;
   position: relative;
   z-index: 1;
@@ -1980,7 +2024,7 @@ label[for="notes-input"] {
   left: 0;
   right: 0;
   height: 1px;
-  background: rgba(255, 255, 255, 0.1);
+  background: hsl(0 0% 100% / 0.1);
 }
 
 .oauth-btn {
@@ -1990,8 +2034,8 @@ label[for="notes-input"] {
   gap: 10px;
   width: 100%;
   padding: 12px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: hsl(0 0% 100% / 0.05);
+  border: 1px solid hsl(0 0% 100% / 0.1);
   border-radius: 8px;
   color: var(--text-primary);
   text-decoration: none;
@@ -2002,8 +2046,8 @@ label[for="notes-input"] {
 }
 
 .oauth-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: hsl(0 0% 100% / 0.08);
+  border-color: hsl(0 0% 100% / 0.2);
   transform: translateY(-1px);
   opacity: 1;
 }
@@ -2013,9 +2057,9 @@ label[for="notes-input"] {
 }
 
 #logoutBtn {
-  background: rgba(255, 255, 255, 0.1);
+  background: hsl(0 0% 100% / 0.1);
   color: var(--text-primary);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid hsl(0 0% 100% / 0.1);
   padding: 8px 16px;
   border-radius: 8px;
   cursor: pointer;
@@ -2024,8 +2068,8 @@ label[for="notes-input"] {
 }
 
 #logoutBtn:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: hsl(0 0% 100% / 0.15);
+  border-color: hsl(0 0% 100% / 0.2);
 }
 
 /* User Header Styles */
@@ -2041,31 +2085,31 @@ label[for="notes-input"] {
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  background: linear-gradient(135deg, hsl(0 0% 100% / 0.08), hsl(0 0% 100% / 0.02));
   border-radius: 10px;
   cursor: pointer;
   transition: all 0.2s;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  border: 1px solid hsl(0 0% 100% / 0.08);
+  box-shadow: 0 10px 30px hsl(0 0% 0% / 0.25);
 }
 
 .user-info:hover {
-  background: rgba(255, 255, 255, 0.12);
+  background: hsl(0 0% 100% / 0.12);
 }
 
 .user-avatar {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
+  background: hsl(0 0% 100% / 0.12);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 14px;
   font-weight: 600;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow: 0 0 0 2px rgba(120, 255, 214, 0.2), 0 12px 30px rgba(0, 0, 0, 0.3);
+  border: 1px solid hsl(0 0% 100% / 0.18);
+  box-shadow: 0 0 0 2px hsl(160 100% 73% / 0.2), 0 12px 30px hsl(0 0% 0% / 0.3);
 }
 
 .user-avatar img {
@@ -2087,11 +2131,11 @@ label[for="notes-input"] {
   top: 60px;
   right: 0;
   width: 300px;
-  background: rgba(15, 16, 20, 0.98);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: hsl(220 14% 7% / 0.98);
+  border: 1px solid hsl(0 0% 100% / 0.12);
   border-radius: 14px;
   padding: 1.5rem;
-  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 25px 70px hsl(0 0% 0% / 0.6);
   z-index: 1000;
   opacity: 0.85;
   backdrop-filter: blur(8px);
@@ -2107,7 +2151,7 @@ label[for="notes-input"] {
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
+  background: hsl(0 0% 100% / 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2141,18 +2185,18 @@ label[for="notes-input"] {
   font-size: 14px;
   font-weight: 400;
   margin-bottom: 0.25rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: hsl(0 0% 100% / 0.7);
   word-break: break-all;
 }
 
 .profile-since {
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.6);
+  color: hsl(0 0% 100% / 0.6);
 }
 
 .modal-hint {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.6);
+  color: hsl(0 0% 100% / 0.6);
   margin: 0.5rem 0;
 }
 
@@ -2165,8 +2209,8 @@ label[for="notes-input"] {
   width: 100%;
   padding: 0.75rem;
   color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: hsl(0 0% 100% / 0.05);
+  border: 1px solid hsl(0 0% 100% / 0.1);
   border-radius: 8px;
   text-align: center;
   cursor: pointer;
@@ -2176,20 +2220,20 @@ label[for="notes-input"] {
 }
 
 .profile-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: hsl(0 0% 100% / 0.08);
+  border-color: hsl(0 0% 100% / 0.2);
 }
 
 .profile-divider {
   height: 1px;
-  background: rgba(255, 255, 255, 0.1);
+  background: hsl(0 0% 100% / 0.1);
   margin: 1rem 0;
 }
 
 /* Profile Settings */
 .profile-settings {
   padding: 0.75rem 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid hsl(0 0% 100% / 0.08);
   margin-top: 0.75rem;
 }
 
@@ -2230,10 +2274,10 @@ label[for="notes-input"] {
 .profile-logout-btn {
   width: 100%;
   padding: 0.75rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: hsl(0 0% 100% / 0.05);
+  border: 1px solid hsl(0 0% 100% / 0.1);
   border-radius: 8px;
-  color: #ff4444;
+  color: hsl(0 100% 63%);
   cursor: pointer;
   transition: all 0.2s;
   font-size: 14px;
@@ -2242,8 +2286,8 @@ label[for="notes-input"] {
 }
 
 .profile-logout-btn:hover {
-  background: rgba(255, 68, 68, 0.1);
-  border-color: #ff4444;
+  background: hsl(0 100% 63% / 0.1);
+  border-color: hsl(0 100% 63%);
 }
 
 /* Username Popup */
@@ -2256,7 +2300,7 @@ label[for="notes-input"] {
   border-radius: 8px;
   padding: 20px;
   width: 300px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px hsl(0 0% 0% / 0.3);
   z-index: 1000;
 }
 
@@ -2325,7 +2369,7 @@ label[for="notes-input"] {
   border-radius: 6px;
   font-size: 14px;
   font-weight: 500;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 12px 30px hsl(0 0% 0% / 0.35);
   z-index: 2000;
   display: none;
   animation: slideIn 0.3s ease;
@@ -2344,11 +2388,11 @@ label[for="notes-input"] {
 }
 
 .notification.success {
-  background: #10b981;
+  background: hsl(160 84% 39%);
   color: white;
 }
 
 .notification.error {
-  background: #ef4444;
+  background: hsl(0 84% 60%);
   color: white;
 }

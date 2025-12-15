@@ -1,11 +1,20 @@
 {
   "ignore": [
     "data/*",
-    "node_modules",
-    ".git"
+    "node_modules/**",
+    ".git/**",
+    "frontend/**",
+    "uploads/**",
+    "*.log",
+    ".DS_Store",
+    "**/.DS_Store"
   ],
   "watch": [
-    "backend/**/*.js"
+    "backend"
   ],
-  "ext": "js"
+  "ext": "js",
+  "delay": 1000,
+  "verbose": true,
+  "legacyWatch": true,
+  "pollingInterval": 1000
 }
