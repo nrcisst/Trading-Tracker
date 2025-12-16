@@ -222,10 +222,13 @@ function renderUserHeader() {
   const initials = getInitials(displayName);
   const profileImage = currentUser.profileImage;
 
+  // Add cache-busting query param to ensure fresh images are displayed
+  const cacheBustedImage = profileImage ? `${profileImage}?t=${Date.now()}` : null;
+
   // Header avatar
   document.getElementById('headerEmail').textContent = displayName;
-  if (profileImage) {
-    document.getElementById('headerAvatarImg').src = profileImage;
+  if (cacheBustedImage) {
+    document.getElementById('headerAvatarImg').src = cacheBustedImage;
     document.getElementById('headerAvatarImg').style.display = 'block';
     document.getElementById('headerAvatarInitials').style.display = 'none';
   } else {
@@ -240,8 +243,8 @@ function renderUserHeader() {
   document.getElementById('dropdownMemberSince').textContent =
     `Member since ${formatDate(currentUser.memberSince)}`;
 
-  if (profileImage) {
-    document.getElementById('dropdownAvatarImg').src = profileImage;
+  if (cacheBustedImage) {
+    document.getElementById('dropdownAvatarImg').src = cacheBustedImage;
     document.getElementById('dropdownAvatarImg').style.display = 'block';
     document.getElementById('dropdownAvatarInitials').style.display = 'none';
   } else {
@@ -1456,22 +1459,21 @@ async function openDayModal(dateKey) {
   notesInput.value = "";
   originalNotes = ''; // Reset original notes
 
+  // Helper function to auto-resize the notes textarea
+  function autoResizeNotes() {
+    notesInput.style.height = 'auto';
+    notesInput.style.height = (notesInput.scrollHeight) + 'px';
+  }
+
+  // Set up auto-resize listener (only once, using named function to avoid duplicates)
+  notesInput.oninput = autoResizeNotes;
+
   try {
     const existing = await fetchDay(dateKey);
     if (existing) {
       notesInput.value = existing.notes ?? "";
       originalNotes = existing.notes ?? ""; // Store original value for comparison
-      // Auto-resize
-      notesInput.style.height = 'auto';
-      notesInput.style.height = (notesInput.scrollHeight) + 'px';
     }
-
-    // Auto-resize listener
-    notesInput.oninput = function () {
-      this.style.height = 'auto';
-      this.style.height = (this.scrollHeight) + 'px';
-    };
-
 
     // Fetch and render entries
     await fetchAndRenderEntries(dateKey);
@@ -1501,6 +1503,11 @@ async function openDayModal(dateKey) {
 
   document.body.style.overflow = 'hidden';
   modal.classList.remove("hidden");
+
+  // Auto-resize notes AFTER modal is visible so scrollHeight is calculated correctly
+  requestAnimationFrame(() => {
+    autoResizeNotes();
+  });
 
   // Click outside to close
   const handleOutsideClick = async (e) => {
