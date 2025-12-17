@@ -547,11 +547,6 @@ const onboardingTour = {
 // Initialize keyboard shortcuts when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     keyboardShortcuts.init();
-
-    // Start onboarding after a short delay to let the app load
-    setTimeout(() => {
-        onboardingTour.start();
-    }, 1500);
 });
 
 // Export for use in app.js
