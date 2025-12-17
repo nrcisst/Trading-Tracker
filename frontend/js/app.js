@@ -895,20 +895,39 @@ function updateYearStats() {
   });
 
   ytdPl = ytdPlCalc;
-  const ytdPlEl = document.getElementById('ytd-pl');
-  ytdPlEl.textContent = formatPL(ytdPl);
-  ytdPlEl.className = `stat-value ${ytdPl > 0 ? 'positive' : ytdPl < 0 ? 'negative' : ''}`;
 
-  document.getElementById('ytd-green-months').textContent = greenMonths;
-  document.getElementById('ytd-red-months').textContent = redMonths;
+  // Update unified stats for year mode
+  const netPlEl = document.getElementById('stat-net-pl');
+  if (netPlEl) {
+    netPlEl.textContent = formatPL(ytdPl);
+    netPlEl.className = `stat-value ${ytdPl > 0 ? 'positive' : ytdPl < 0 ? 'negative' : ''}`;
+  }
 
-  const bestEl = document.getElementById('ytd-best-month');
-  bestEl.textContent = formatPL(best);
-  bestEl.className = `stat-value ${best > 0 ? 'positive' : best < 0 ? 'negative' : ''}`;
+  // Trading days = number of months with trades
+  const tradingDaysEl = document.getElementById('stat-trading-days');
+  if (tradingDaysEl) tradingDaysEl.textContent = greenMonths + redMonths;
 
-  const worstEl = document.getElementById('ytd-worst-month');
-  worstEl.textContent = formatPL(worst);
-  worstEl.className = `stat-value ${worst > 0 ? 'positive' : worst < 0 ? 'negative' : ''}`;
+  // Max Win = best month, Max Loss = worst month (for year view)
+  const maxWinEl = document.getElementById('stat-max-win');
+  if (maxWinEl) maxWinEl.textContent = formatPL(best);
+
+  const maxLossEl = document.getElementById('stat-max-loss');
+  if (maxLossEl) maxLossEl.textContent = formatPL(worst);
+
+  // Avg Green/Red - use monthly averages
+  const avgGreenEl = document.getElementById('stat-avg-green');
+  if (avgGreenEl) {
+    const greenTotal = values.filter(v => v > 0).reduce((sum, v) => sum + v, 0);
+    const avgGreen = greenMonths > 0 ? greenTotal / greenMonths : 0;
+    avgGreenEl.textContent = formatPL(avgGreen);
+  }
+
+  const avgRedEl = document.getElementById('stat-avg-red');
+  if (avgRedEl) {
+    const redTotal = values.filter(v => v < 0).reduce((sum, v) => sum + v, 0);
+    const avgRed = redMonths > 0 ? redTotal / redMonths : 0;
+    avgRedEl.textContent = formatPL(avgRed);
+  }
 
   renderHeaderStatus();
 }
