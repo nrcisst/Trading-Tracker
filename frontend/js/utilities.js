@@ -310,7 +310,7 @@ const onboardingTour = {
     },
 
     start() {
-        if (!this.shouldShow()) return;
+        // Always allow manual start
         this.currentStep = 0;
         this.showStep();
     },
@@ -363,6 +363,7 @@ const onboardingTour = {
       padding: 1.5rem;
       max-width: 320px;
       box-shadow: 0 20px 50px hsl(0 0% 0% / 0.5);
+      pointer-events: auto;
     `;
 
         document.body.appendChild(tooltip);

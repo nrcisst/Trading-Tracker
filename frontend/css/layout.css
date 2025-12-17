@@ -150,22 +150,24 @@ h1 {
     box-shadow: 0 2px 4px hsl(0 0% 0% / 0.2);
 }
 
-/* Stats Grid */
+/* Stats Grid - 4 columns for balanced layout */
 #stats {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: var(--space-md);
-    margin-bottom: var(--space-sm);
+    margin-bottom: var(--space-md);
 }
 
-#monthly-stats {
-    margin-bottom: var(--space-lg);
+@media (max-width: 1024px) {
+    #stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
-.monthly-stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: var(--space-md);
+@media (max-width: 480px) {
+    #stats {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* View Controls */
