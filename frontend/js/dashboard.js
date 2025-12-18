@@ -55,7 +55,9 @@ function renderWeekView() {
         const dateKey = `${day.getFullYear()}-${String(day.getMonth() + 1).padStart(2, '0')}-${String(day.getDate()).padStart(2, '0')}`;
         const data = (window.getTradesByDate?.() || {})[dateKey] || { pl: 0 };
         const pl = data.pl || 0;
-        const tradeCount = data.tradeCount || 0;
+        // Get trade count from entriesByDate (not tradesByDate which doesn't have this field)
+        const entries = (window.entriesByDate || {})[dateKey] || [];
+        const tradeCount = entries.length;
 
         const isToday = day.getTime() === today.getTime();
         const plClass = pl > 0 ? 'positive' : pl < 0 ? 'negative' : '';
@@ -426,43 +428,6 @@ function renderStreakStats() {
     if (worstLossEl) worstLossEl.textContent = `${worstLossStreak} days`;
 }
 
-// ---- Tag Autocomplete ----
-let usedTags = new Set();
-
-function loadUsedTags() {
-    Object.values(allEntries || {}).forEach(dayEntries => {
-        (Array.isArray(dayEntries) ? dayEntries : []).forEach(entry => {
-            if (entry.tag) usedTags.add(entry.tag);
-        });
-    });
-}
-
-function initTagAutocomplete() {
-    const tagInput = document.getElementById('entry-tag');
-    if (!tagInput || tagInput.tagName !== 'INPUT') return; // Skip if it's a select
-
-    // Create datalist for autocomplete
-    let datalist = document.getElementById('tag-suggestions');
-    if (!datalist) {
-        datalist = document.createElement('datalist');
-        datalist.id = 'tag-suggestions';
-        document.body.appendChild(datalist);
-        tagInput.setAttribute('list', 'tag-suggestions');
-    }
-
-    // Update suggestions
-    datalist.innerHTML = Array.from(usedTags).map(tag =>
-        `<option value="${tag}">`
-    ).join('');
-}
-
-function addTag(tag) {
-    if (tag && tag.trim()) {
-        usedTags.add(tag.trim());
-        initTagAutocomplete();
-    }
-}
-
 // ---- Simple Markdown Support ----
 function renderMarkdown(text) {
     if (!text) return '';
@@ -488,7 +453,8 @@ function renderMarkdown(text) {
 
     // Bullet lists: - item
     html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
-    html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+    // Wrap consecutive list items in ul tags
+    html = html.replace(/((?:<li>.*<\/li>\s*)+)/g, '<ul>$1</ul>');
 
     // Line breaks
     html = html.replace(/\n/g, '<br>');
@@ -607,7 +573,6 @@ let allEntries = {};
 
 function setAllEntries(entries) {
     allEntries = entries;
-    loadUsedTags();
 }
 
 // Initialize dashboard features
@@ -623,7 +588,6 @@ window.showDashboardView = showDashboardView;
 window.showJournalView = showJournalView;
 window.showCalendarView = showCalendarView;
 window.setAllEntries = setAllEntries;
-window.addTag = addTag;
 window.renderMarkdown = renderMarkdown;
 window.prevWeek = prevWeek;
 window.nextWeek = nextWeek;

@@ -575,6 +575,11 @@ async function fetchMonthData(year, month) {
     // Store entries grouped by date
     window.entriesByDate = entriesJson.data || {};
 
+    // Update dashboard.js with entries data for charts
+    if (typeof window.setAllEntries === 'function') {
+      window.setAllEntries(window.entriesByDate);
+    }
+
     // Clear current trades and repopulate
     tradesByDate = {};
     tradesJson.data.forEach(trade => {
@@ -588,6 +593,39 @@ async function fetchMonthData(year, month) {
     showError(err.message || "Failed to load month data");
   }
 }
+
+// Merge month data without clearing existing data (for cross-month week views)
+async function fetchMonthDataMerge(year, month) {
+  const m = month + 1;
+  try {
+    const tradesRes = await authedFetch(`${apiBase}/trades?year=${year}&month=${m}`);
+    if (!tradesRes.ok) return;
+    const tradesJson = await tradesRes.json();
+
+    const entriesRes = await authedFetch(`${apiBase}/entries/month?year=${year}&month=${m}`);
+    if (!entriesRes.ok) return;
+    const entriesJson = await entriesRes.json();
+
+    // Merge entries (don't clear)
+    const newEntries = entriesJson.data || {};
+    window.entriesByDate = { ...window.entriesByDate, ...newEntries };
+
+    // Merge trades (don't clear)
+    tradesJson.data.forEach(trade => {
+      tradesByDate[trade.trade_date] = trade;
+    });
+
+    // Update dashboard entries
+    if (typeof window.setAllEntries === 'function') {
+      window.setAllEntries(window.entriesByDate);
+    }
+  } catch (err) {
+    console.error("fetchMonthDataMerge error:", err);
+  }
+}
+
+// Export for dashboard.js
+window.fetchMonthDataMerge = fetchMonthDataMerge;
 
 async function fetchYearData(year) {
   try {
@@ -2028,6 +2066,14 @@ function setupMonthControls() {
       document.getElementById('current-month-label').textContent = `${currentYear}`;
       await fetchYearData(currentYear);
       renderYearGrid();
+    } else if (calendarMode === 'week') {
+      // Move week back by ~4 weeks (approximate month navigation)
+      if (typeof window.currentWeekStart !== 'undefined' && window.currentWeekStart) {
+        window.currentWeekStart.setDate(window.currentWeekStart.getDate() - 28);
+        if (typeof window.loadWeekData === 'function') {
+          await window.loadWeekData();
+        }
+      }
     } else {
       currentMonth--;
       if (currentMonth < 0) {
@@ -2045,6 +2091,14 @@ function setupMonthControls() {
       document.getElementById('current-month-label').textContent = `${currentYear}`;
       await fetchYearData(currentYear);
       renderYearGrid();
+    } else if (calendarMode === 'week') {
+      // Move week forward by ~4 weeks (approximate month navigation)
+      if (typeof window.currentWeekStart !== 'undefined' && window.currentWeekStart) {
+        window.currentWeekStart.setDate(window.currentWeekStart.getDate() + 28);
+        if (typeof window.loadWeekData === 'function') {
+          await window.loadWeekData();
+        }
+      }
     } else {
       currentMonth++;
       if (currentMonth > 11) {
@@ -2142,10 +2196,42 @@ window.showUsernameEdit = function () {
   input.value = currentUser?.username || '';
   popup.style.display = 'block';
   input.focus();
+
+  // Add ESC key handler
+  const escHandler = (e) => {
+    if (e.key === 'Escape') {
+      closeUsernamePopup();
+      document.removeEventListener('keydown', escHandler);
+    }
+  };
+  document.addEventListener('keydown', escHandler);
+  popup._escHandler = escHandler;
+
+  // Add click-outside handler
+  const clickHandler = (e) => {
+    const popupContent = popup.querySelector('h3')?.parentElement || popup;
+    if (!popupContent.contains(e.target)) {
+      closeUsernamePopup();
+    }
+  };
+  // Delay to avoid immediate trigger
+  setTimeout(() => {
+    document.addEventListener('click', clickHandler);
+    popup._clickHandler = clickHandler;
+  }, 100);
 };
 
 window.closeUsernamePopup = function () {
-  document.getElementById('usernamePopup').style.display = 'none';
+  const popup = document.getElementById('usernamePopup');
+  popup.style.display = 'none';
+
+  // Remove event listeners
+  if (popup._escHandler) {
+    document.removeEventListener('keydown', popup._escHandler);
+  }
+  if (popup._clickHandler) {
+    document.removeEventListener('click', popup._clickHandler);
+  }
 };
 
 function showNotification(message, type = 'success') {

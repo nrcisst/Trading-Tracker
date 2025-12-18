@@ -91,24 +91,6 @@ function createConfetti() {
     setTimeout(() => container.remove(), 4000);
 }
 
-// Check for milestones and celebrate
-function checkMilestones(netPl, previousPl) {
-    // Celebrate first green day of the month
-    if (netPl > 0 && (previousPl === undefined || previousPl <= 0)) {
-        // First green recorded
-    }
-
-    // Celebrate hitting round numbers
-    const milestones = [100, 500, 1000, 2500, 5000, 10000];
-    for (const milestone of milestones) {
-        if (previousPl < milestone && netPl >= milestone) {
-            createConfetti();
-            showSuccess(`Milestone: $${milestone.toLocaleString()} reached!`);
-            break;
-        }
-    }
-}
-
 // Celebrate a green day when saving
 function celebrateGreenDay(pl) {
     if (pl > 0) {
@@ -394,7 +376,6 @@ window.animateCounter = animateCounter;
 window.animateAllStats = animateAllStats;
 window.createConfetti = createConfetti;
 window.celebrateGreenDay = celebrateGreenDay;
-window.checkMilestones = checkMilestones;
 window.keyboardShortcuts = keyboardShortcuts;
 
 // ---- P/L Calculator ----
