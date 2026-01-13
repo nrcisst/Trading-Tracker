@@ -40,3 +40,4 @@ build/
 *.temp
 data/
 uploads/
+.env.development

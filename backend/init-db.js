@@ -1,4 +1,4 @@
-require('dotenv').config({ path: require('path').join(__dirname, '../.env') });
+require('./env-loader');
 const { pool } = require('./db-mysql');
 
 const tables = [
