@@ -271,10 +271,12 @@ function formatDate(dateStr) {
 }
 
 window.toggleProfileDropdown = function () {
-
-
   const dropdown = document.getElementById('profileDropdown');
-  dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+  const userInfo = document.querySelector('.user-info');
+  const isOpen = dropdown.style.display !== 'none';
+  
+  dropdown.style.display = isOpen ? 'none' : 'block';
+  userInfo.classList.toggle('dropdown-open', !isOpen);
 }
 
 window.handleProfileImageUpload = async function (event) {

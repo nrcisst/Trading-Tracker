@@ -200,116 +200,369 @@
 .user-info {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    background: linear-gradient(135deg, hsl(0 0% 100% / 0.08), hsl(0 0% 100% / 0.02));
-    border-radius: 10px;
+    gap: 0.75rem;
+    padding: 0.5rem 1rem 0.5rem 0.5rem;
+    background: linear-gradient(135deg,
+            hsl(220 15% 12% / 0.9),
+            hsl(220 15% 8% / 0.95));
+    border-radius: 100px;
     cursor: pointer;
-    transition: all 0.2s;
-    border: 1px solid hsl(0 0% 100% / 0.08);
-    box-shadow: 0 10px 30px hsl(0 0% 0% / 0.25);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid hsl(0 0% 100% / 0.1);
+    box-shadow:
+        0 4px 20px hsl(0 0% 0% / 0.4),
+        inset 0 1px 0 hsl(0 0% 100% / 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.user-info::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+            hsl(160 100% 73% / 0) 0%,
+            hsl(160 100% 73% / 0.08) 50%,
+            hsl(217 91% 60% / 0) 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
 }
 
 .user-info:hover {
-    background: hsl(0 0% 100% / 0.12);
+    background: linear-gradient(135deg,
+            hsl(220 15% 16% / 0.95),
+            hsl(220 15% 12% / 0.98));
+    border-color: hsl(160 100% 73% / 0.3);
+    transform: translateY(-2px);
+    box-shadow:
+        0 8px 32px hsl(0 0% 0% / 0.5),
+        0 0 24px hsl(160 100% 73% / 0.15),
+        inset 0 1px 0 hsl(0 0% 100% / 0.12);
 }
 
+.user-info:hover::before {
+    opacity: 1;
+}
+
+/* Premium Avatar Container with Animated Ring */
 .user-avatar {
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    background: hsl(0 0% 100% / 0.12);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 14px;
     font-weight: 600;
-    overflow: hidden;
-    border: 1px solid hsl(0 0% 100% / 0.18);
-    box-shadow: 0 0 0 2px hsl(160 100% 73% / 0.2), 0 12px 30px hsl(0 0% 0% / 0.3);
+    position: relative;
+    background: linear-gradient(135deg,
+            hsl(160 65% 52% / 0.2),
+            hsl(217 91% 60% / 0.2));
+    padding: 3px;
+    z-index: 1;
 }
 
-.user-avatar img {
+.user-avatar::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg,
+            hsl(160 100% 73%) 0deg,
+            hsl(217 91% 60%) 120deg,
+            hsl(271 76% 65%) 240deg,
+            hsl(160 100% 73%) 360deg);
+    animation: avatarRingRotate 6s linear infinite;
+    z-index: -2;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.user-info:hover .user-avatar::before {
+    opacity: 1;
+    animation-duration: 3s;
+}
+
+.user-avatar::after {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    border-radius: 50%;
+    background: hsl(220 14% 11%);
+    z-index: -1;
+}
+
+@keyframes avatarRingRotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.user-avatar-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(145deg,
+            hsl(220 15% 18%),
+            hsl(220 15% 12%));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: var(--text-primary);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    border: 1px solid hsl(0 0% 100% / 0.1);
+    position: relative;
+    z-index: 1;
+}
+
+.user-avatar img,
+.user-avatar-inner img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 50%;
+}
+
+/* Online Status Indicator */
+.user-avatar .status-indicator {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 10px;
+    height: 10px;
+    background: hsl(160 65% 52%);
+    border-radius: 50%;
+    border: 2px solid hsl(220 14% 11%);
+    box-shadow: 0 0 8px hsl(160 65% 52% / 0.6);
+    animation: statusPulse 2s ease-in-out infinite;
+    z-index: 2;
+}
+
+@keyframes statusPulse {
+
+    0%,
+    100% {
+        box-shadow: 0 0 8px hsl(160 65% 52% / 0.6);
+        transform: scale(1);
+    }
+
+    50% {
+        box-shadow: 0 0 16px hsl(160 65% 52% / 0.9);
+        transform: scale(1.1);
+    }
 }
 
 #headerEmail {
-    font-size: 14px;
-    max-width: 200px;
+    font-size: 13px;
+    font-weight: 500;
+    max-width: 150px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    color: var(--text-secondary);
+    transition: color 0.2s ease;
 }
 
-/* Profile Dropdown */
+.user-info:hover #headerEmail {
+    color: var(--text-primary);
+}
+
+.user-info svg {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0.6;
+}
+
+.user-info:hover svg {
+    opacity: 1;
+}
+
+.user-info.dropdown-open svg {
+    transform: rotate(180deg);
+}
+
+/* Premium Profile Dropdown */
 .profile-dropdown {
     position: absolute;
-    top: 60px;
+    top: calc(100% + 12px);
     right: 0;
-    width: 300px;
-    background: hsl(220 14% 7% / 0.98);
-    border: 1px solid hsl(0 0% 100% / 0.12);
-    border-radius: 14px;
-    padding: 1.5rem;
-    box-shadow: 0 25px 70px hsl(0 0% 0% / 0.6);
+    width: 320px;
+    background: linear-gradient(180deg,
+            hsl(220 15% 10% / 0.98),
+            hsl(220 15% 7% / 0.99));
+    border: 1px solid hsl(0 0% 100% / 0.1);
+    border-top-color: hsl(0 0% 100% / 0.15);
+    border-radius: 20px;
+    padding: 0;
+    box-shadow:
+        0 25px 80px hsl(0 0% 0% / 0.7),
+        0 0 40px hsl(160 100% 73% / 0.08),
+        inset 0 1px 0 hsl(0 0% 100% / 0.08);
     z-index: 1000;
-    opacity: 0.85;
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    overflow: hidden;
+    transform-origin: top right;
+    animation: dropdownSlideIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes dropdownSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Decorative Header Background */
+.profile-dropdown::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    background: linear-gradient(135deg,
+            hsl(160 65% 52% / 0.15) 0%,
+            hsl(217 91% 60% / 0.15) 50%,
+            hsl(271 76% 65% / 0.1) 100%);
+    pointer-events: none;
+    mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
 }
 
 .profile-header {
     display: flex;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 1.5rem 1.5rem;
+    position: relative;
+    z-index: 1;
 }
 
+/* Large Avatar with Premium Styling */
 .profile-avatar-large {
-    width: 80px;
-    height: 80px;
+    width: 88px;
+    height: 88px;
     border-radius: 50%;
-    background: hsl(0 0% 100% / 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 32px;
-    font-weight: 600;
-    overflow: hidden;
-    flex-shrink: 0;
+    font-weight: 700;
+    position: relative;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg,
+            hsl(160 65% 52% / 0.2),
+            hsl(217 91% 60% / 0.2));
+    padding: 4px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
-.profile-avatar-large img {
+.profile-avatar-large:hover {
+    transform: scale(1.05);
+}
+
+.profile-avatar-large::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg,
+            hsl(160 100% 73%) 0deg,
+            hsl(217 91% 60%) 90deg,
+            hsl(271 76% 65%) 180deg,
+            hsl(330 81% 60%) 270deg,
+            hsl(160 100% 73%) 360deg);
+    animation: avatarRingRotate 8s linear infinite;
+    z-index: -2;
+}
+
+.profile-avatar-large::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    border-radius: 50%;
+    background: hsl(220 14% 11%);
+    z-index: -1;
+}
+
+.profile-avatar-large-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(145deg,
+            hsl(220 15% 20%),
+            hsl(220 15% 12%));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: var(--text-primary);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    border: 1px solid hsl(0 0% 100% / 0.1);
+    position: relative;
+    z-index: 1;
+}
+
+.profile-avatar-large img,
+.profile-avatar-large-inner img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    border-radius: 50%;
 }
 
 .profile-info {
-    flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
 }
 
 .profile-username {
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 0.25rem;
+    font-size: 1.25rem;
+    font-weight: 700;
     color: var(--text-primary);
+    letter-spacing: -0.01em;
 }
 
 .profile-email {
-    font-size: 14px;
+    font-size: 0.85rem;
     font-weight: 400;
-    margin-bottom: 0.25rem;
-    color: hsl(0 0% 100% / 0.7);
+    color: hsl(0 0% 100% / 0.6);
     word-break: break-all;
 }
 
 .profile-since {
-    font-size: 13px;
-    color: hsl(0 0% 100% / 0.6);
+    font-size: 0.75rem;
+    color: hsl(0 0% 100% / 0.4);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.25rem;
+}
+
+.profile-since::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: hsl(160 65% 52%);
+    border-radius: 50%;
+    box-shadow: 0 0 8px hsl(160 65% 52% / 0.6);
 }
 
 .modal-hint {
@@ -319,50 +572,100 @@
 }
 
 .profile-actions {
-    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0 1.5rem 1rem;
 }
 
 .profile-btn {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
     width: 100%;
-    padding: 0.75rem;
+    padding: 0.75rem 1rem;
     color: var(--text-primary);
-    background: hsl(0 0% 100% / 0.05);
+    background: linear-gradient(135deg,
+            hsl(0 0% 100% / 0.08),
+            hsl(0 0% 100% / 0.04));
     border: 1px solid hsl(0 0% 100% / 0.1);
-    border-radius: 8px;
+    border-radius: 12px;
     text-align: center;
     cursor: pointer;
-    transition: all 0.2s;
-    font-size: 14px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 0.9rem;
+    font-weight: 500;
     box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+            hsl(160 100% 73% / 0) 0%,
+            hsl(160 100% 73% / 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .profile-btn:hover {
-    background: hsl(0 0% 100% / 0.08);
-    border-color: hsl(0 0% 100% / 0.2);
+    background: linear-gradient(135deg,
+            hsl(0 0% 100% / 0.12),
+            hsl(0 0% 100% / 0.06));
+    border-color: hsl(160 100% 73% / 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px hsl(0 0% 0% / 0.3);
+}
+
+.profile-btn:hover::before {
+    opacity: 1;
+}
+
+.profile-btn:active {
+    transform: translateY(0);
 }
 
 .profile-divider {
     height: 1px;
-    background: hsl(0 0% 100% / 0.1);
-    margin: 1rem 0;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            hsl(0 0% 100% / 0.12) 50%,
+            transparent 100%);
+    margin: 0;
 }
 
 /* Profile Settings */
 .profile-settings {
-    padding: 0.75rem 0;
-    border-top: 1px solid hsl(0 0% 100% / 0.08);
-    margin-top: 0.75rem;
+    padding: 1rem 1.5rem;
+    background: hsl(0 0% 0% / 0.2);
 }
 
 .settings-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.5rem 0;
+    padding: 0.75rem 0;
     font-size: 0.85rem;
     color: var(--text-secondary);
     cursor: pointer;
+    transition: color 0.2s ease;
+    border-bottom: 1px solid hsl(0 0% 100% / 0.05);
+}
+
+.settings-row:last-child {
+    border-bottom: none;
+}
+
+.settings-row:hover {
+    color: var(--text-primary);
+}
+
+.settings-row span {
+    font-weight: 500;
 }
 
 .settings-row input[type="checkbox"] {
@@ -388,23 +691,59 @@
     border-color: var(--border-focus);
 }
 
+/* Logout Section */
+.profile-logout-section {
+    padding: 0 1.5rem 1.5rem;
+}
+
 .profile-logout-btn {
     width: 100%;
-    padding: 0.75rem;
-    background: hsl(0 0% 100% / 0.05);
-    border: 1px solid hsl(0 0% 100% / 0.1);
-    border-radius: 8px;
-    color: hsl(0 100% 63%);
+    padding: 0.75rem 1rem;
+    background: linear-gradient(135deg,
+            hsl(0 65% 45% / 0.15),
+            hsl(0 65% 45% / 0.08));
+    border: 1px solid hsl(0 65% 55% / 0.3);
+    border-radius: 12px;
+    color: hsl(0 100% 70%);
     cursor: pointer;
-    transition: all 0.2s;
-    font-size: 14px;
-    font-family: 'Inter', sans-serif;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family: var(--font-sans);
     text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-logout-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center,
+            hsl(0 100% 63% / 0.2) 0%,
+            transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .profile-logout-btn:hover {
-    background: hsl(0 100% 63% / 0.1);
+    background: linear-gradient(135deg,
+            hsl(0 70% 50% / 0.25),
+            hsl(0 70% 50% / 0.15));
     border-color: hsl(0 100% 63%);
+    transform: translateY(-2px);
+    box-shadow:
+        0 4px 20px hsl(0 100% 63% / 0.25),
+        0 0 30px hsl(0 100% 63% / 0.1);
+    color: hsl(0 100% 75%);
+}
+
+.profile-logout-btn:hover::before {
+    opacity: 1;
+}
+
+.profile-logout-btn:active {
+    transform: translateY(0);
 }
 
 /* Username Popup */
