@@ -14,7 +14,7 @@ const CALLBACK_URL = process.env.NODE_ENV === 'production'
 // Only configure Google OAuth if credentials are provided
 if (GOOGLE_CLIENT_ID && GOOGLE_CLIENT_SECRET) {
   console.log('Google OAuth configured');
-  
+
   passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
@@ -22,23 +22,23 @@ if (GOOGLE_CLIENT_ID && GOOGLE_CLIENT_SECRET) {
   }, (accessToken, refreshToken, profile, done) => {
     const googleId = profile.id;
     const email = profile.emails?.[0]?.value;
-    
+
     if (!email) return done(new Error('No email from Google'));
-    
+
     // Check if user exists with this Google ID
-    dbClient.get('SELECT * FROM users WHERE oauth_provider = ? AND oauth_id = ?', 
+    dbClient.get('SELECT * FROM users WHERE oauth_provider = ? AND oauth_id = ?',
       ['google', googleId], (err, user) => {
         if (err) return done(err);
-        
+
         if (user) {
           return done(null, user);
         }
-        
+
         // Check if email exists (link accounts)
-        dbClient.get('SELECT * FROM users WHERE email = ? OR oauth_email = ?', 
+        dbClient.get('SELECT * FROM users WHERE email = ? OR oauth_email = ?',
           [email, email], (err, existingUser) => {
             if (err) return done(err);
-            
+
             if (existingUser) {
               // Link OAuth to existing account
               dbClient.run('UPDATE users SET oauth_provider = ?, oauth_id = ?, oauth_email = ? WHERE id = ?',
@@ -49,9 +49,9 @@ if (GOOGLE_CLIENT_ID && GOOGLE_CLIENT_SECRET) {
             } else {
               // Create new user
               dbClient.run('INSERT INTO users (oauth_provider, oauth_id, oauth_email) VALUES (?, ?, ?)',
-                ['google', googleId, email], function(err, result) {
+                ['google', googleId, email], function (err, result) {
                   if (err) return done(err);
-                  const userId = result ? result.lastID : this.lastID;
+                  const userId = this.lastID;
                   done(null, { id: userId, oauth_provider: 'google', oauth_id: googleId, oauth_email: email });
                 });
             }

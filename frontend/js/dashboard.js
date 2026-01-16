@@ -206,6 +206,8 @@ function updateWeekStats() {
     let lossCount = 0;
     let grossProfit = 0;
     let grossLoss = 0;
+    let greenDayTotal = 0;
+    let redDayTotal = 0;
 
     weekDays.forEach(day => {
         const dateKey = `${day.getFullYear()}-${String(day.getMonth() + 1).padStart(2, '0')}-${String(day.getDate()).padStart(2, '0')}`;
@@ -219,10 +221,12 @@ function updateWeekStats() {
                 if (data.pl > maxWin) maxWin = data.pl;
                 winCount++;
                 grossProfit += data.pl;
+                greenDayTotal += data.pl;
             } else {
                 if (data.pl < maxLoss) maxLoss = data.pl;
                 lossCount++;
                 grossLoss += Math.abs(data.pl);
+                redDayTotal += data.pl;
             }
         }
     });
@@ -230,6 +234,8 @@ function updateWeekStats() {
     const totalTrades = winCount + lossCount;
     const winRate = totalTrades > 0 ? Math.round((winCount / totalTrades) * 100) : 0;
     const profitFactor = grossLoss > 0 ? (grossProfit / grossLoss).toFixed(2) : grossProfit > 0 ? '∞' : '0.00';
+    const avgGreenDay = winCount > 0 ? greenDayTotal / winCount : 0;
+    const avgRedDay = lossCount > 0 ? redDayTotal / lossCount : 0;
 
     // Update the unified stats UI
     const netPlEl = document.getElementById('stat-net-pl');
@@ -252,6 +258,13 @@ function updateWeekStats() {
 
     const maxLossEl = document.getElementById('stat-max-loss');
     if (maxLossEl) maxLossEl.textContent = formatPL(maxLoss);
+
+    // Update avg green/red day stats
+    const avgGreenEl = document.getElementById('stat-avg-green');
+    if (avgGreenEl) avgGreenEl.textContent = formatPL(avgGreenDay);
+
+    const avgRedEl = document.getElementById('stat-avg-red');
+    if (avgRedEl) avgRedEl.textContent = formatPL(avgRedDay);
 }
 
 // ---- Dashboard Analytics Charts ----

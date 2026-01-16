@@ -274,7 +274,7 @@ window.toggleProfileDropdown = function () {
   const dropdown = document.getElementById('profileDropdown');
   const userInfo = document.querySelector('.user-info');
   const isOpen = dropdown.style.display !== 'none';
-  
+
   dropdown.style.display = isOpen ? 'none' : 'block';
   userInfo.classList.toggle('dropdown-open', !isOpen);
 }
@@ -1050,7 +1050,8 @@ function renderEquityCurve() {
 
     data = equityData.map(d => d.equity);
   }
-
+  labels.unshift('Start');
+  data.unshift(0);
   const ctx = document.getElementById('equity-curve').getContext('2d');
 
   // Destroy existing chart if it exists
