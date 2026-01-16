@@ -1613,6 +1613,34 @@ async function openDayModal(dateKey) {
   notesInput.value = "";
   originalNotes = ''; // Reset original notes
 
+  // Reset add/edit form state
+  const addBtn = document.getElementById("add-trade-btn");
+  if (addBtn) {
+    delete addBtn.dataset.editId;
+    addBtn.textContent = "Add";
+  }
+
+  // Clear trade entry form inputs
+  const tickerInput = document.getElementById("entry-ticker");
+  const plInput = document.getElementById("entry-pl");
+  const tagInput = document.getElementById("entry-tag");
+  const confidenceInput = document.getElementById("entry-confidence");
+  const qualityInput = document.getElementById("entry-quality");
+  const directionInput = document.getElementById("entry-direction");
+  const entryPriceInput = document.getElementById("entry-entry-price");
+  const exitPriceInput = document.getElementById("entry-exit-price");
+  const sizeInput = document.getElementById("entry-size");
+
+  if (tickerInput) tickerInput.value = "";
+  if (plInput) plInput.value = "";
+  if (tagInput) tagInput.value = "";
+  if (confidenceInput) confidenceInput.value = "";
+  if (qualityInput) qualityInput.value = "";
+  if (directionInput) directionInput.value = "LONG";
+  if (entryPriceInput) entryPriceInput.value = "";
+  if (exitPriceInput) exitPriceInput.value = "";
+  if (sizeInput) sizeInput.value = "";
+
   // Helper function to auto-resize the notes textarea
   function autoResizeNotes() {
     notesInput.style.height = 'auto';
