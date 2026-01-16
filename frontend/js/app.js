@@ -1381,11 +1381,13 @@ function setCalendarMode(mode) {
     if (calendarContainer) calendarContainer.classList.add('hidden');
     if (weekContainer) weekContainer.classList.remove('hidden');
     if (yearContainer) yearContainer.classList.add('hidden');
+    // Set week based on the currently viewed month/year
+    if (typeof window.setWeekFromMonth === 'function') {
+      window.setWeekFromMonth(currentYear, currentMonth);
+    }
     // Load week data and update stats
     if (typeof window.loadWeekData === 'function') {
       window.loadWeekData();
-    } else if (typeof renderWeekView === 'function') {
-      renderWeekView();
     }
   } else {
     // month mode
@@ -2260,32 +2262,21 @@ window.closeUsernamePopup = function () {
   }
 };
 
-function showNotification(message, type = 'success') {
-  const notification = document.getElementById('notification');
-  notification.textContent = message;
-  notification.className = `notification ${type}`;
-  notification.style.display = 'block';
-
-  setTimeout(() => {
-    notification.style.display = 'none';
-  }, 3000);
-}
-
 window.saveUsername = async function () {
   const username = document.getElementById('usernameInput').value.trim();
 
   if (!username) {
-    showNotification('Username cannot be empty', 'error');
+    showError('Username cannot be empty');
     return;
   }
 
   if (username.length < 3) {
-    showNotification('Username must be at least 3 characters', 'error');
+    showError('Username must be at least 3 characters');
     return;
   }
 
   if (!/^[a-zA-Z0-9_-]+$/.test(username)) {
-    showNotification('Username can only contain letters, numbers, - and _', 'error');
+    showError('Username can only contain letters, numbers, - and _');
     return;
   }
 
@@ -2301,12 +2292,12 @@ window.saveUsername = async function () {
       currentUser.username = data.username;
       renderUserHeader();
       closeUsernamePopup();
-      showNotification('Username updated successfully!', 'success');
+      showSuccess('Username updated successfully!');
     } else {
-      showNotification(data.error || 'Failed to update username', 'error');
+      showError(data.error || 'Failed to update username');
     }
   } catch (err) {
-    showNotification('Error updating username', 'error');
+    showError('Error updating username');
   }
 };
 

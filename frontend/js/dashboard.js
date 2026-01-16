@@ -91,6 +91,17 @@ function initWeekView() {
     currentWeekStart.setHours(0, 0, 0, 0);
 }
 
+// Set week start based on a specific year and month (uses first Monday of that month)
+function setWeekFromMonth(year, month) {
+    // Start from the 1st of the month
+    const firstOfMonth = new Date(year, month, 1);
+    const dayOfWeek = firstOfMonth.getDay();
+    // Find the Monday of that week (could be in previous month)
+    const diff = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+    currentWeekStart = new Date(year, month, 1 + diff);
+    currentWeekStart.setHours(0, 0, 0, 0);
+}
+
 function getWeekDays(startDate) {
     const days = [];
     for (let i = 0; i < 7; i++) {
@@ -792,7 +803,6 @@ function setAllEntries(entries) {
 // Initialize dashboard features
 document.addEventListener('DOMContentLoaded', () => {
     setupDashboardViewToggle();
-    initWeekView();
 });
 
 // Export for app.js and onclick handlers
@@ -808,3 +818,4 @@ window.nextWeek = nextWeek;
 window.loadWeekData = loadWeekData;
 window.updateWeekStats = updateWeekStats;
 window.getWeekDays = getWeekDays;
+window.setWeekFromMonth = setWeekFromMonth;

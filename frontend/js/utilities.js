@@ -29,75 +29,6 @@ function animateCounter(element, targetValue, duration = 800, prefix = '', suffi
     requestAnimationFrame(updateCounter);
 }
 
-// Animate all stat values with counting effect
-function animateAllStats() {
-    const statElements = document.querySelectorAll('.stat-value');
-    statElements.forEach(el => {
-        const text = el.textContent;
-        const isPercent = text.includes('%');
-        const isDollar = text.includes('$');
-        const isNegative = text.includes('-');
-
-        // Extract numeric value
-        let value = parseFloat(text.replace(/[$%,]/g, ''));
-        if (isNaN(value)) return;
-
-        if (isDollar) {
-            animateCounter(el, value, 800, '$', '');
-        } else if (isPercent) {
-            animateCounter(el, value, 800, '', '%');
-        } else {
-            animateCounter(el, value, 800, '', '');
-        }
-    });
-}
-
-// ---- Confetti Celebration ----
-function createConfetti() {
-    const colors = ['#10B981', '#34D399', '#6EE7B7', '#FFD700', '#FFA500'];
-    const container = document.createElement('div');
-    container.className = 'confetti-container';
-    container.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 9999;
-    overflow: hidden;
-  `;
-    document.body.appendChild(container);
-
-    for (let i = 0; i < 50; i++) {
-        const confetti = document.createElement('div');
-        confetti.className = 'confetti-piece';
-        confetti.style.cssText = `
-      position: absolute;
-      width: ${Math.random() * 10 + 5}px;
-      height: ${Math.random() * 10 + 5}px;
-      background: ${colors[Math.floor(Math.random() * colors.length)]};
-      left: ${Math.random() * 100}%;
-      top: -20px;
-      opacity: ${Math.random() * 0.5 + 0.5};
-      border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
-      animation: confettiFall ${Math.random() * 2 + 2}s linear forwards;
-      animation-delay: ${Math.random() * 0.5}s;
-    `;
-        container.appendChild(confetti);
-    }
-
-    // Remove container after animation
-    setTimeout(() => container.remove(), 4000);
-}
-
-// Celebrate a green day when saving
-function celebrateGreenDay(pl) {
-    if (pl > 0) {
-        createConfetti();
-    }
-}
-
 // ---- Keyboard Shortcuts ----
 const keyboardShortcuts = {
     isModalOpen: () => !document.getElementById('day-modal').classList.contains('hidden'),
@@ -244,24 +175,13 @@ const keyboardShortcuts = {
     }
 };
 
-// ---- CSS for confetti animation (inject once) ----
-(function injectConfettiCSS() {
-    if (document.getElementById('confetti-styles')) return;
+// ---- CSS for keyboard help (inject once) ----
+(function injectKeyboardHelpCSS() {
+    if (document.getElementById('keyboard-help-styles')) return;
 
     const style = document.createElement('style');
-    style.id = 'confetti-styles';
+    style.id = 'keyboard-help-styles';
     style.textContent = `
-    @keyframes confettiFall {
-      0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(100vh) rotate(720deg);
-        opacity: 0;
-      }
-    }
-    
     .keyboard-help-overlay {
       position: fixed;
       inset: 0;
@@ -320,48 +240,6 @@ const keyboardShortcuts = {
       font-size: 0.8rem;
       color: var(--text-primary, white);
     }
-    
-    .onboarding-content h4 {
-      margin: 0 0 0.5rem;
-      font-size: 1.1rem;
-      color: var(--text-primary, white);
-    }
-    
-    .onboarding-content p {
-      margin: 0 0 1rem;
-      color: var(--text-secondary, #999);
-      line-height: 1.5;
-    }
-    
-    .onboarding-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    
-    .onboarding-progress {
-      font-size: 0.8rem;
-      color: var(--text-tertiary, #666);
-      margin-right: auto;
-    }
-    
-    .onboarding-skip {
-      background: transparent;
-      border: none;
-      color: var(--text-secondary, #999);
-      cursor: pointer;
-      font-size: 0.9rem;
-    }
-    
-    .onboarding-next {
-      background: var(--text-primary, white);
-      color: var(--bg-color, black);
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      font-weight: 600;
-      cursor: pointer;
-    }
   `;
     document.head.appendChild(style);
 })();
@@ -373,9 +251,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Export for use in app.js
 window.animateCounter = animateCounter;
-window.animateAllStats = animateAllStats;
-window.createConfetti = createConfetti;
-window.celebrateGreenDay = celebrateGreenDay;
 window.keyboardShortcuts = keyboardShortcuts;
 
 // ---- P/L Calculator ----
